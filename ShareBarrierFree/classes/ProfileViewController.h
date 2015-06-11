@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ProfileViewController.h
 //  ShareBarrierFree
 //
 //  Created by cisl on 15-6-11.
@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UIViewController
-
+#import "REMenu.h"
+@interface ProfileViewController : UITableViewController
 
 @end
-
