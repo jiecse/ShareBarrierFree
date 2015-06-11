@@ -24,10 +24,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithWhite:0.902 alpha:1.000];
-    
+        self.view.backgroundColor = [UIColor colorWithWhite:0.902 alpha:1.000];
+    //适配ios7
+    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
+    {
+        //        self.edgesForExtendedLayout=UIRectEdgeNone;
+        self.navigationController.navigationBar.translucent = NO;
+    }
+
+    [self.navigationItem setTitle:@"设置"];
+
     // Here self.navigationController is an instance of NavigationViewController (which is a root controller for the main window)
     //
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self.navigationController action:@selector(toggleMenu)];

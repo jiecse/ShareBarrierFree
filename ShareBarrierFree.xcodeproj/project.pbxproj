@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		604893BB1B2924D3000193DE /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 604893BA1B2924D3000193DE /* NavigationViewController.m */; };
-		604893BF1B292534000193DE /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 604893BD1B292534000193DE /* HomeViewController.m */; };
+		604893BF1B292534000193DE /* HomeViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 604893BD1B292534000193DE /* HomeViewController.mm */; };
 		604893C01B292534000193DE /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 604893BE1B292534000193DE /* HomeViewController.xib */; };
 		604893C41B292589000193DE /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 604893C21B292589000193DE /* ProfileViewController.m */; };
 		604893C51B292589000193DE /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 604893C31B292589000193DE /* ProfileViewController.xib */; };
@@ -17,9 +17,15 @@
 		604893F71B2930BE000193DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604893F51B2930BE000193DE /* CoreGraphics.framework */; };
 		604893F81B2930BE000193DE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604893F61B2930BE000193DE /* Foundation.framework */; };
 		604893FB1B293EB8000193DE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604893FA1B293EB8000193DE /* MapKit.framework */; };
+		604893FD1B293FF9000193DE /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604893FC1B293FF9000193DE /* BaiduMapAPI.framework */; };
+		604894031B294075000193DE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604893FE1B294075000193DE /* CoreLocation.framework */; };
+		604894041B294075000193DE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604893FF1B294075000193DE /* OpenGLES.framework */; };
+		604894051B294075000193DE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604894001B294075000193DE /* QuartzCore.framework */; };
+		604894061B294075000193DE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604894011B294075000193DE /* Security.framework */; };
+		604894071B294075000193DE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 604894021B294075000193DE /* SystemConfiguration.framework */; };
+		604894091B2940C2000193DE /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 604894081B2940C2000193DE /* mapapi.bundle */; };
 		60D7C40B1B29172600FEECD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 60D7C40A1B29172600FEECD6 /* main.m */; };
 		60D7C40E1B29172600FEECD6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 60D7C40D1B29172600FEECD6 /* AppDelegate.m */; };
-		60D7C4191B29172600FEECD6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60D7C4171B29172600FEECD6 /* LaunchScreen.xib */; };
 		60D7C4251B29172600FEECD6 /* ShareBarrierFreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 60D7C4241B29172600FEECD6 /* ShareBarrierFreeTests.m */; };
 		60D7C4301B291AB600FEECD6 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 60D7C42F1B291AB600FEECD6 /* Podfile */; };
 		E4361D49171EE395F5B92260 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C425762EC8C1432813180DE /* libPods.a */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -41,7 +47,7 @@
 		604893B91B2924D3000193DE /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		604893BA1B2924D3000193DE /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		604893BC1B292534000193DE /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		604893BD1B292534000193DE /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		604893BD1B292534000193DE /* HomeViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HomeViewController.mm; sourceTree = "<group>"; };
 		604893BE1B292534000193DE /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		604893C11B292589000193DE /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		604893C21B292589000193DE /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
@@ -52,12 +58,18 @@
 		604893F61B2930BE000193DE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		604893F91B2930D7000193DE /* ShareBarrierFree-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShareBarrierFree-Prefix.pch"; sourceTree = "<group>"; };
 		604893FA1B293EB8000193DE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		604893FC1B293FF9000193DE /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = "<group>"; };
+		604893FE1B294075000193DE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		604893FF1B294075000193DE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		604894001B294075000193DE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		604894011B294075000193DE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		604894021B294075000193DE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		604894081B2940C2000193DE /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = mapapi.bundle; path = BaiduMapAPI.framework/Resources/mapapi.bundle; sourceTree = "<group>"; };
 		60D7C4051B29172600FEECD6 /* ShareBarrierFree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShareBarrierFree.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D7C4091B29172600FEECD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60D7C40A1B29172600FEECD6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		60D7C40C1B29172600FEECD6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		60D7C40D1B29172600FEECD6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		60D7C4181B29172600FEECD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		60D7C41E1B29172600FEECD6 /* ShareBarrierFreeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShareBarrierFreeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D7C4231B29172600FEECD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60D7C4241B29172600FEECD6 /* ShareBarrierFreeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareBarrierFreeTests.m; sourceTree = "<group>"; };
@@ -70,8 +82,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				604893FB1B293EB8000193DE /* MapKit.framework in Frameworks */,
+				604894031B294075000193DE /* CoreLocation.framework in Frameworks */,
+				604894041B294075000193DE /* OpenGLES.framework in Frameworks */,
+				604894051B294075000193DE /* QuartzCore.framework in Frameworks */,
+				604894061B294075000193DE /* Security.framework in Frameworks */,
+				604894071B294075000193DE /* SystemConfiguration.framework in Frameworks */,
 				604893F71B2930BE000193DE /* CoreGraphics.framework in Frameworks */,
+				604893FD1B293FF9000193DE /* BaiduMapAPI.framework in Frameworks */,
+				604893FB1B293EB8000193DE /* MapKit.framework in Frameworks */,
 				604893F81B2930BE000193DE /* Foundation.framework in Frameworks */,
 				604893F41B2930AC000193DE /* UIKit.framework in Frameworks */,
 				E4361D49171EE395F5B92260 /* libPods.a in Frameworks */,
@@ -91,6 +109,7 @@
 		60D7C3FC1B29172600FEECD6 = {
 			isa = PBXGroup;
 			children = (
+				604894081B2940C2000193DE /* mapapi.bundle */,
 				60D7C42F1B291AB600FEECD6 /* Podfile */,
 				60D7C4071B29172600FEECD6 /* ShareBarrierFree */,
 				60D7C4211B29172600FEECD6 /* ShareBarrierFreeTests */,
@@ -115,7 +134,6 @@
 				60D7C42E1B29178900FEECD6 /* classes */,
 				60D7C40C1B29172600FEECD6 /* AppDelegate.h */,
 				60D7C40D1B29172600FEECD6 /* AppDelegate.m */,
-				60D7C4171B29172600FEECD6 /* LaunchScreen.xib */,
 				604893DF1B292E56000193DE /* Images.xcassets */,
 				60D7C4081B29172600FEECD6 /* Supporting Files */,
 			);
@@ -155,7 +173,7 @@
 				604893B91B2924D3000193DE /* NavigationViewController.h */,
 				604893BA1B2924D3000193DE /* NavigationViewController.m */,
 				604893BC1B292534000193DE /* HomeViewController.h */,
-				604893BD1B292534000193DE /* HomeViewController.m */,
+				604893BD1B292534000193DE /* HomeViewController.mm */,
 				604893BE1B292534000193DE /* HomeViewController.xib */,
 				604893C11B292589000193DE /* ProfileViewController.h */,
 				604893C21B292589000193DE /* ProfileViewController.m */,
@@ -176,6 +194,12 @@
 		E55D7C73A034271DBAC295E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				604893FE1B294075000193DE /* CoreLocation.framework */,
+				604893FF1B294075000193DE /* OpenGLES.framework */,
+				604894001B294075000193DE /* QuartzCore.framework */,
+				604894011B294075000193DE /* Security.framework */,
+				604894021B294075000193DE /* SystemConfiguration.framework */,
+				604893FC1B293FF9000193DE /* BaiduMapAPI.framework */,
 				604893FA1B293EB8000193DE /* MapKit.framework */,
 				604893F51B2930BE000193DE /* CoreGraphics.framework */,
 				604893F61B2930BE000193DE /* Foundation.framework */,
@@ -270,8 +294,8 @@
 				604893C51B292589000193DE /* ProfileViewController.xib in Resources */,
 				60D7C4301B291AB600FEECD6 /* Podfile in Resources */,
 				604893E01B292E56000193DE /* Images.xcassets in Resources */,
+				604894091B2940C2000193DE /* mapapi.bundle in Resources */,
 				604893C01B292534000193DE /* HomeViewController.xib in Resources */,
-				60D7C4191B29172600FEECD6 /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,7 +348,7 @@
 			files = (
 				604893BB1B2924D3000193DE /* NavigationViewController.m in Sources */,
 				60D7C40E1B29172600FEECD6 /* AppDelegate.m in Sources */,
-				604893BF1B292534000193DE /* HomeViewController.m in Sources */,
+				604893BF1B292534000193DE /* HomeViewController.mm in Sources */,
 				604893C41B292589000193DE /* ProfileViewController.m in Sources */,
 				60D7C40B1B29172600FEECD6 /* main.m in Sources */,
 			);
@@ -347,17 +371,6 @@
 			targetProxy = 60D7C41F1B29172600FEECD6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		60D7C4171B29172600FEECD6 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				60D7C4181B29172600FEECD6 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		60D7C4261B29172600FEECD6 /* Debug */ = {
@@ -441,6 +454,10 @@
 			baseConfigurationReference = 214E426890632EDE1A26C7B8 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "ShareBarrierFree/ShareBarrierFree-Prefix.pch";
 				INFOPLIST_FILE = ShareBarrierFree/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -454,6 +471,10 @@
 			baseConfigurationReference = E580E817B2C76D083A15CA97 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "ShareBarrierFree/ShareBarrierFree-Prefix.pch";
 				INFOPLIST_FILE = ShareBarrierFree/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

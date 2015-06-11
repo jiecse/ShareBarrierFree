@@ -11,7 +11,6 @@
 #import "NavigationViewController.h"
 #import "HomeViewController.h"
 #import "ProfileViewController.h"
-
 @interface NavigationViewController ()
 @property (strong, readwrite, nonatomic) REMenu *menu;
 
@@ -68,7 +67,6 @@
     homeItem.tag = 0;
 
     profileItem.tag = 1;
-    
     self.menu = [[REMenu alloc] initWithItems:@[homeItem,  profileItem]];
     
     // Background view

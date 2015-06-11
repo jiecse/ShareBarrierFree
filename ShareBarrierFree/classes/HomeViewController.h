@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <BaiduMapAPI/BMapKit.h>
 #import "REMenu.h"
-@interface HomeViewController : UIViewController
+
+@interface HomeViewController : UIViewController<BMKMapViewDelegate,BMKLocationServiceDelegate>{
+
+    IBOutlet BMKMapView *_mapView;
+    BMKLocationService* _locService;
+
+}
 
 @end
