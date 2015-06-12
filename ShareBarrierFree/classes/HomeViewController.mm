@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "NavigationViewController.h"
+#import "AddTagViewController.h"
 @interface HomeViewController ()
 
 @end
@@ -82,7 +83,9 @@
 }
 
 -(void)addTag{
-
+    AddTagViewController *addTagViewController = [[AddTagViewController alloc] initWithNibName:@"AddTagViewController" bundle:nil];
+    [addTagViewController.navigationItem setTitle:@"添加标记"];
+    [self.navigationController pushViewController:addTagViewController animated:YES];
 }
 /*
 #pragma mark - Navigation
