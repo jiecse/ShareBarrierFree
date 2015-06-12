@@ -14,5 +14,7 @@
     IBOutlet UIImageView *imageView;
 }
 - (IBAction)uploadPictureBtn:(id)sender;
+- (IBAction)textFiledReturnEditing:(id)sender;
+@property(nonatomic,strong) NSString * currentLocation;
 
 @end

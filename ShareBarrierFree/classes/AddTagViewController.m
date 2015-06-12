@@ -20,6 +20,9 @@
     UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveNewTag)];
     //initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveNewTag)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
+    if (self.currentLocation != nil) {
+        describeText.text = self.currentLocation;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,6 +40,10 @@
                                                     otherButtonTitles:@"拍照", @"从相册中选取", nil];
     [choiceSheet showInView:self.view];
 
+}
+
+- (IBAction)textFiledReturnEditing:(id)sender {
+    [sender resignFirstResponder];
 }
 
 #pragma mark UIActionSheetDelegate

@@ -10,11 +10,24 @@
 #import <BaiduMapAPI/BMapKit.h>
 #import "REMenu.h"
 
-@interface HomeViewController : UIViewController<BMKMapViewDelegate,BMKLocationServiceDelegate>{
+@interface HomeViewController : UIViewController<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>{
 
     IBOutlet BMKMapView *_mapView;
     BMKLocationService* _locService;
-
+    BMKGeoCodeSearch* _geocodesearch;
+    
+    
 }
+//经度
+@property (nonatomic, assign) double longitude;
 
+//纬度
+@property (nonatomic, assign) double latitude;
+
+
+typedef enum {
+    AddTagReverseGeoCode,
+    SearchTagReverseGeoCode
+}ReverseGeoCodeType;
+@property (nonatomic, assign) ReverseGeoCodeType reverseGeoCodeType;
 @end
