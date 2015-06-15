@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TagDetailViewController : UIViewController
+@interface TagDetailViewController : UIViewController{
 
+    IBOutlet UITextView *addressTextView;
+    IBOutlet UIImageView *currentImageView;
+}
+
+@property(strong,nonatomic) NSString *currentAddress;
+@property(strong,nonatomic) UIImage *currentImage;
 @end

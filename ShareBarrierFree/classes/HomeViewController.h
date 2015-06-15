@@ -24,7 +24,7 @@
 //纬度
 @property (nonatomic, assign) double latitude;
 
-
+@property(nonatomic,assign) BOOL isGetLatLong; 
 typedef enum {
     AddTagReverseGeoCode,
     SearchTagReverseGeoCode

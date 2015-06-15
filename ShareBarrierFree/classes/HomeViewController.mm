@@ -10,6 +10,8 @@
 #import "NavigationViewController.h"
 #import "AddTagViewController.h"
 #import "TagDetailViewController.h"
+
+#import "ProgressHUD.h"
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
 @interface HomeViewController (){
@@ -47,6 +49,8 @@
     UIBarButtonItem *tagButtonItem=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTag)];
     NSArray *itemArray=[[NSArray alloc]initWithObjects:searchButtonItem,tagButtonItem, nil];
     [self.navigationItem setRightBarButtonItems:itemArray];
+    
+    _isGetLatLong =false;
     
     [_mapView setZoomLevel:18];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
@@ -135,7 +139,7 @@
         @{@"lng": @121.606765, @"lat": @31.197322},
         @{@"lng": @121.604553, @"lat": @31.197765},
         @{@"lng": @121.606475, @"lat": @31.197355}];
-        int len = [gpsList count];
+        NSUInteger len = [gpsList count];
         for (int i=0; i<len; i++) {
             
             NSDictionary *dic = [gpsList objectAtIndex:i];
@@ -151,12 +155,19 @@
 -(void)addTag{
     _reverseGeoCodeType = AddTagReverseGeoCode;
     NSLog(@"lat=%f,lon=%f",self.latitude,self.longitude);
-    BOOL isSuccess = [self reverseGeocode:self.latitude andLongtitude:self.longitude];
-    if (self.latitude == 0 || self.longitude == 0 || isSuccess==false) {
-        AddTagViewController *addTagViewController = [[AddTagViewController alloc] initWithNibName:@"AddTagViewController" bundle:nil];
-        [addTagViewController.navigationItem setTitle:@"添加标记"];
-        [self.navigationController pushViewController:addTagViewController animated:YES];
+    if (_isGetLatLong == false) {
+        [ProgressHUD showError:@"未获取当前设备位置"];
+    }else{
+        BOOL isSuccess = [self reverseGeocode:self.latitude andLongtitude:self.longitude];
+        if (isSuccess ==false) {
+            AddTagViewController *addTagViewController = [[AddTagViewController alloc] initWithNibName:@"AddTagViewController" bundle:nil];
+            [addTagViewController.navigationItem setTitle:@"添加标记"];
+            [self.navigationController pushViewController:addTagViewController animated:YES];
+            
+
+        }
     }
+
     
 }
 /*
@@ -223,6 +234,7 @@
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
     //NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    _isGetLatLong = true;
     self.longitude = userLocation.location.coordinate.longitude;
     self.latitude = userLocation.location.coordinate.latitude;
     [_mapView updateLocationData:userLocation];
@@ -279,7 +291,11 @@
  */
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view
 {
+    CLLocationCoordinate2D viewLocation =[view.annotation coordinate];
+    NSString * viewAddress = [view.annotation title];
+    NSLog(@"CLLocationCoordinate2D %f,%f,%@",viewLocation.latitude,viewLocation.longitude,viewAddress);
     TagDetailViewController *tagDetailViewController = [[TagDetailViewController alloc] initWithNibName:@"TagDetailViewController" bundle:nil];
+    tagDetailViewController.currentAddress = viewAddress;
     [self.navigationController pushViewController:tagDetailViewController animated:YES];
 }
 
@@ -327,6 +343,9 @@
             //        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
             //        [myAlertView show];
         }else if(_reverseGeoCodeType == AddTagReverseGeoCode) {
+//            if ([result.address isEqual:@""]) {
+//                return;
+//            }
             AddTagViewController *addTagViewController = [[AddTagViewController alloc] initWithNibName:@"AddTagViewController" bundle:nil];
             [addTagViewController setCurrentLocation:result.address];
             [addTagViewController.navigationItem setTitle:@"添加标记"];

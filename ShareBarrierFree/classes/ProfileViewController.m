@@ -8,6 +8,11 @@
 
 #import "ProfileViewController.h"
 #import "NavigationViewController.h"
+#import "LJCommonGroup.h"
+#import "LJCommonItem.h"
+#import "RootController.h"
+#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+
 @interface ProfileViewController ()
 
 @end
@@ -38,8 +43,24 @@
     //
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self.navigationController action:@selector(toggleMenu)];
     
-
+    [self setupGroups];
 }
+
+-(void)setupGroups
+{
+    [self setGroup0];
+}
+
+-(void)setGroup0
+{
+    LJCommonGroup *LJGroup=[[LJCommonGroup alloc]init];
+    [self.groups addObject:LJGroup];
+    
+    LJCommonItem *outItem=[LJCommonItem itemWithTitle:@"退出登录"];
+    
+    [LJGroup.items addObject:outItem];
+}
+
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
@@ -51,21 +72,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
-}
-
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
@@ -110,21 +116,27 @@
 }
 */
 
-/*
-#pragma mark - Table view delegate
 
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
+#pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
+    if(indexPath.section==0&&indexPath.item==0)
+    {
+        [self logOutSystem];
+    }
     
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
-*/
+
+-(void)logOutSystem
+{
+    //删除userdefaults中的用户信息
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:@"username"];
+    [userDefaults removeObjectForKey:@"password"];
+    
+    RootController *rootController=(RootController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    [rootController switchToLoginView];
+}
 
 /*
 #pragma mark - Navigation

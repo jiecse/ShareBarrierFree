@@ -17,6 +17,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //self.view.backgroundColor = [UIColor colorWithWhite:0.902 alpha:1.000];
+    //适配ios7
+    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
+    {
+        //        self.edgesForExtendedLayout=UIRectEdgeNone;
+        self.navigationController.navigationBar.translucent = NO;
+    }
+
     UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveNewTag)];
     //initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveNewTag)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
@@ -143,6 +151,7 @@
     [picker dismissViewControllerAnimated:YES completion:^() {
         UIImage *portraitImg = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
         [imageView setImage:portraitImg];
+       // [self compressPicture];
     }];
 }
 
@@ -153,8 +162,8 @@
 
 #pragma mark - picture compress
 -(NSData*) compressPicture{
-    NSData *imageData = UIImageJPEGRepresentation(imageView.image,0.75);
-   // NSLog(@"%d",[imageData length]);
+    NSData *imageData = UIImageJPEGRepresentation(imageView.image,0.01);
+   NSLog(@"%@",imageData);
     //UIImage *resultImage = [UIImage imageWithData:imageData];
     return imageData;
 }

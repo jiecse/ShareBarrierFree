@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "REMenu.h"
-@interface ProfileViewController : UITableViewController
+#import "LJCommonViewController.h"
+@interface ProfileViewController : LJCommonViewController
 
 @end

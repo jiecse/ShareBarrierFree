@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "NavigationViewController.h"
 #import "HomeViewController.h"
+#import "RootController.h"
 @interface AppDelegate ()
 
 @end
@@ -27,7 +28,8 @@ BMKMapManager *_mapManager;
     }
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[NavigationViewController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
+    //self.window.rootViewController = [[NavigationViewController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
+    self.window.rootViewController = [[RootController alloc] init];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

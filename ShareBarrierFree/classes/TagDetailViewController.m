@@ -16,7 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [addressTextView setText:_currentAddress];
+    [currentImageView setImage:[UIImage imageNamed:@"Icon_Home"]];
 }
 
 - (void)didReceiveMemoryWarning {
