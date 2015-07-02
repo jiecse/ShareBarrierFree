@@ -6,8 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddTagViewController">
             <connections>
-                <outlet property="describeText" destination="USC-If-r9o" id="mDx-zk-FhR"/>
+                <outlet property="detailDescrption" destination="qG7-V0-MN7" id="ROc-I0-bst"/>
                 <outlet property="imageView" destination="adj-YS-Gp5" id="Ab0-62-HWa"/>
+                <outlet property="mapView" destination="sCH-IL-pOV" id="GiC-w8-xVQ"/>
+                <outlet property="titleText" destination="MhQ-MX-EkL" id="RIo-y1-Fk7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,43 +18,50 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" id="sbk-kc-JYZ">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="453"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="adj-YS-Gp5">
-                            <rect key="frame" x="25" y="109" width="270" height="266"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4at-as-UBZ">
-                            <rect key="frame" x="25" y="79" width="270" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.0" green="0.83529411764705885" blue="0.63137254901960782" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <state key="normal" title="选取照片">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="uploadPictureBtn:" destination="-1" eventType="touchUpInside" id="aLY-ag-Iyr"/>
-                            </connections>
-                        </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="地点描述" minimumFontSize="17" id="USC-If-r9o">
-                            <rect key="frame" x="25" y="20" width="270" height="30"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <attributedString key="attributedText"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <action selector="textFiledReturnEditing:" destination="-1" eventType="editingDidEndOnExit" id="AiU-QR-dR6"/>
-                            </connections>
-                        </textField>
-                    </subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="标题" minimumFontSize="17" id="MhQ-MX-EkL">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <connections>
+                        <action selector="textFiledReturnEditing:" destination="-1" eventType="editingDidEndOnExit" id="aFy-Og-YHR"/>
+                    </connections>
+                </textField>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="详细描述" id="qG7-V0-MN7">
+                    <rect key="frame" x="0.0" y="32" width="320" height="79"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                </textView>
+                <view contentMode="scaleToFill" id="sCH-IL-pOV" customClass="BMKMapView">
+                    <rect key="frame" x="0.0" y="119" width="320" height="138"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4at-as-UBZ">
+                    <rect key="frame" x="74" y="258" width="172" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.0" green="0.83529411764705885" blue="0.63137254901960782" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="选取照片">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="uploadPictureBtn:" destination="-1" eventType="touchUpInside" id="hyP-uP-i4C"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoPicture" id="adj-YS-Gp5">
+                    <rect key="frame" x="74" y="288" width="172" height="280"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="461" y="302"/>
+            <color key="backgroundColor" white="0.89815237226277367" alpha="1" colorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="510" y="303"/>
         </view>
     </objects>
+    <resources>
+        <image name="NoPicture" width="292" height="233"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -11,7 +11,7 @@
 #import "NavigationViewController.h"
 #import "HomeViewController.h"
 #import "ShareBarrierFreeAPIS.h"
-
+#import "GVUserDefaults+Properties.h"
 @interface RootController ()
 
 @property(nonatomic, strong) LoginViewController *loginViewController;
@@ -39,11 +39,14 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *userName = [userDefaults stringForKey:@"username"];
-    NSString *password = [userDefaults stringForKey:@"password"];
+    //NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    NSString *userName = [userDefaults stringForKey:@"username"];
+//    NSString *password = [userDefaults stringForKey:@"password"];
+    NSString *userName = [GVUserDefaults standardUserDefaults].username;
+    NSString *password = [GVUserDefaults standardUserDefaults].password;
+    NSLog(@"userName=%@,password=%@",userName,password);
     //[userDefaults setObject:password forKey:@"password"];
-    if (!(userName == nil) && !(password == nil)) {
+    if (!([userName isEqualToString:@""]) && !([password isEqualToString:@""])) {
         self.navigationViewController = [[NavigationViewController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
         [self.view addSubview:self.navigationViewController.view];
     } else {
@@ -56,6 +59,7 @@
 
 - (void)switchToMainTabBarView
 {
+    
     [self.loginViewController.view removeFromSuperview];
     self.loginViewController = nil;
     

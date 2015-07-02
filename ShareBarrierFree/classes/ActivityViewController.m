@@ -1,27 +1,25 @@
 //
-//  ProfileViewController.m
+//  ActivityViewController.m
 //  ShareBarrierFree
 //
-//  Created by cisl on 15-6-11.
+//  Created by cisl on 15-6-29.
 //  Copyright (c) 2015年 LJ. All rights reserved.
 //
 
-#import "ProfileViewController.h"
+#import "ActivityViewController.h"
 #import "NavigationViewController.h"
-#import "UserDetailViewController.h"
-#import "ShareBarrierFreeAPIS.h"
+#import "TagDetailViewController.h"
 #import "LJCommonGroup.h"
 #import "LJCommonItem.h"
-#import "RootController.h"
+#import "ShareBarrierFreeAPIS.h"
+#import "MJExtension.h"
+#import "LocationInfo.h"
 #import "ProgressHUD.h"
-#import "User.h"
-#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-
-@interface ProfileViewController ()
+@interface ActivityViewController ()
 
 @end
 
-@implementation ProfileViewController
+@implementation ActivityViewController
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,38 +31,63 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        self.view.backgroundColor = [UIColor colorWithWhite:0.902 alpha:1.000];
+    self.view.backgroundColor = [UIColor colorWithWhite:0.902 alpha:1.000];
     //适配ios7
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
     {
         //        self.edgesForExtendedLayout=UIRectEdgeNone;
         self.navigationController.navigationBar.translucent = NO;
     }
-
-    [self.navigationItem setTitle:@"设置"];
-
+    
+    [self.navigationItem setTitle:@"历史记录"];
+    
     // Here self.navigationController is an instance of NavigationViewController (which is a root controller for the main window)
     //
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self.navigationController action:@selector(toggleMenu)];
-    
     [self setupGroups];
+}
+
+-(void) getHistoryInfoArray{
+    dispatch_async(serverQueue, ^{
+        NSDictionary *resultDic = [ShareBarrierFreeAPIS GetUserReleaseList];
+        if ([[resultDic objectForKey:@"result"] isEqualToString:@"success"]) {
+            _historyInfoArray = [LocationInfo getLocationInfos:[resultDic objectForKey:@"data"]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self setGroup0];
+                [self.tableView reloadData];
+
+            });
+            
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"获取记录失败" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alertView show];
+            });
+            return;
+        }
+    });
 }
 
 -(void)setupGroups
 {
-    [self setGroup0];
+    //[self setGroup0];
+    [self getHistoryInfoArray];
+
 }
 
 -(void)setGroup0
 {
-    LJCommonGroup *LJGroup=[[LJCommonGroup alloc]init];
-    [self.groups addObject:LJGroup];
-    
-    LJCommonItem *detailItem=[LJCommonItem itemWithTitle:@"账号详情"];
-    [LJGroup.items addObject:detailItem];
-    
-    LJCommonItem *outItem=[LJCommonItem itemWithTitle:@"退出登录"];
-    [LJGroup.items addObject:outItem];
+    LJCommonGroup *group=[[LJCommonGroup alloc]init];
+    group.groupheader = @"记录列表";
+    [self.groups addObject:group];
+
+    LocationInfo *locInfo;
+    for (locInfo in _historyInfoArray) {
+        LJCommonItem *item = [LJCommonItem itemWithTitle:locInfo.title];
+        item.subtitle = [NSString stringWithString:locInfo.time];
+        [group.items addObject:item];
+    }
 }
 
 - (void)viewWillLayoutSubviews
@@ -78,6 +101,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Table view data source
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
@@ -124,50 +149,40 @@
 
 
 #pragma mark - Table view delegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
-    if(indexPath.section==0)
-    {
-        if (indexPath.item==0) {
-            [self switchToDetailView];
-        }else if (indexPath.item==1) {
-            [self logOutSystem];
-
-        }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(indexPath.section == 0){
+        [self switchToTagDetailVC:[_historyInfoArray objectAtIndex:indexPath.row]];
     }
+    NSLog(@"item = %ld",(long)indexPath.item);
     
+    //self.navigationController pushViewController:detailViewController animated:YES];
 }
--(void)switchToDetailView{
-    [ProgressHUD show:@"正在获取用户详情"];
+
+
+#pragma mark - 联系TagDetailVC
+-(void) switchToTagDetailVC:(LocationInfo*)locInfo{
+    [ProgressHUD show:@"正在获取详细信息"];
     self.view.userInteractionEnabled = false;
     
     dispatch_async(serverQueue, ^{
-        NSDictionary *resultDic = [ShareBarrierFreeAPIS GetUserDetail];
+        NSDictionary *resultDic = [ShareBarrierFreeAPIS GetDetailDescription:locInfo.infoId];
         
         if ([[resultDic objectForKey:@"result"] isEqualToString:@"success"]) {
-            User *user = [User initUser:[resultDic objectForKey:@"data"]];
+            [locInfo setDetailDescription:[[resultDic objectForKey:@"infomation"] objectForKey:@"description"]];
+            [locInfo setPictureUrl:[[resultDic objectForKey:@"infomation"] objectForKey:@"picture_url"]];
+            [locInfo setUserId:[[[resultDic objectForKey:@"infomation"] objectForKey:@"user_id"] intValue]];
             [self performSelectorOnMainThread:@selector(successWithMessage:) withObject:@"获取成功" waitUntilDone:YES];
-            [self performSelectorOnMainThread:@selector(switchToDetailViewController:) withObject:user waitUntilDone:YES];
+            [self performSelectorOnMainThread:@selector(switchNextViewController:) withObject:locInfo waitUntilDone:YES];
             return ;
         }
-        else {
+        else//登录出错
+        {
             [self performSelectorOnMainThread:@selector(errorWithMessage:) withObject:@"获取失败！" waitUntilDone:YES];
             return ;
         }
     });
-
-}
-
--(void)logOutSystem
-{
-    //删除userdefaults中的用户信息
-    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-    [userDefaults removeObjectForKey:@"username"];
-    [userDefaults removeObjectForKey:@"password"];
-    
-    RootController *rootController=(RootController *)[UIApplication sharedApplication].keyWindow.rootViewController;
-    [rootController switchToLoginView];
 }
 
 - (void) successWithMessage:(NSString *)message {
@@ -180,11 +195,11 @@
     [ProgressHUD showError:message];
 }
 
-- (void)switchToDetailViewController:(User*)user
+- (void)switchNextViewController:(LocationInfo*)info
 {
-    UserDetailViewController *userDetailViewController = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
-    userDetailViewController.user = user;
-    [self.navigationController pushViewController:userDetailViewController animated:YES];
+    TagDetailViewController *tagDetailViewController = [[TagDetailViewController alloc] initWithNibName:@"TagDetailViewController" bundle:nil];
+    tagDetailViewController.locationInfo = info;
+    [self.navigationController pushViewController:tagDetailViewController animated:YES];
 }
 
 @end

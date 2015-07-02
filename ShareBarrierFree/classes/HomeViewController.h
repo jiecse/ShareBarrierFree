@@ -18,13 +18,19 @@
     
     
 }
-//经度
+//当前经度
 @property (nonatomic, assign) double longitude;
-
-//纬度
+//当前纬度
 @property (nonatomic, assign) double latitude;
 
-@property(nonatomic,assign) BOOL isGetLatLong; 
+//当前经纬度
+@property (nonatomic, assign) CLLocationCoordinate2D pt;
+
+//是否获取到当前位置的经纬度
+@property(nonatomic,assign) BOOL isGetLatLong;
+//附近无障碍设施数组
+@property(nonatomic,strong) NSArray *locationInfoArray;
+
 typedef enum {
     AddTagReverseGeoCode,
     SearchTagReverseGeoCode

@@ -14,5 +14,6 @@
     IBOutlet UITextField *usernameTextField;
 }
 - (IBAction)loginButtonClicked:(id)sender;
+- (IBAction)registerUser:(UIButton *)sender;
 
 @end

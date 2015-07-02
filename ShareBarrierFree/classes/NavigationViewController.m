@@ -10,6 +10,7 @@
 
 #import "NavigationViewController.h"
 #import "HomeViewController.h"
+#import "ActivityViewController.h"
 #import "ProfileViewController.h"
 @interface NavigationViewController ()
 @property (strong, readwrite, nonatomic) REMenu *menu;
@@ -29,7 +30,7 @@
     }
     
     __typeof (self) __weak weakSelf = self;
-    REMenuItem *homeItem = [[REMenuItem alloc] initWithTitle:@"Home"
+    REMenuItem *homeItem = [[REMenuItem alloc] initWithTitle:@"主页"
                                                     subtitle:@"Return to Home Screen"
                                                        image:[UIImage imageNamed:@"Icon_Home"]
                                             highlightedImage:nil
@@ -39,9 +40,17 @@
                                                           [weakSelf setViewControllers:@[controller] animated:NO];
                                                       }];
     
+    REMenuItem *activityItem = [[REMenuItem alloc] initWithTitle:@"历史记录"
+                                                    subtitle:@"View History Moments"
+                                                       image:[UIImage imageNamed:@"Icon_Activity"]
+                                            highlightedImage:nil
+                                                      action:^(REMenuItem *item) {
+                                                          NSLog(@"Item: %@", item);
+                                                          ActivityViewController *controller = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
+                                                          [weakSelf setViewControllers:@[controller] animated:NO];
+                                                      }];
     
-    
-    REMenuItem *profileItem = [[REMenuItem alloc] initWithTitle:@"Profile"
+    REMenuItem *profileItem = [[REMenuItem alloc] initWithTitle:@"设置"
                                                        subtitle:@"Personal Setting"
                                                           image:[UIImage imageNamed:@"Icon_Profile"]
                                                highlightedImage:nil
@@ -65,9 +74,9 @@
     */
     
     homeItem.tag = 0;
-
-    profileItem.tag = 1;
-    self.menu = [[REMenu alloc] initWithItems:@[homeItem,  profileItem]];
+    activityItem.tag = 1;
+    profileItem.tag = 2;
+    self.menu = [[REMenu alloc] initWithItems:@[homeItem, activityItem, profileItem]];
     
     // Background view
     //

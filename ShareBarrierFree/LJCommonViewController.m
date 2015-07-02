@@ -88,7 +88,7 @@
     LJCommonGroup *group = self.groups[indexPath.section];
     LJCommonItem *item = group.items[indexPath.row];
     cell.item = item;
-    [cell setIndexPath:indexPath rowsInSection:group.items.count];
+    [cell setIndexPath:indexPath rowsInSection:(int)group.items.count];
     //3.返回cell
     return  cell;
 }

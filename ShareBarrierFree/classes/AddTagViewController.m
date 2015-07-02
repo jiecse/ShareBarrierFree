@@ -8,8 +8,12 @@
 
 #import "AddTagViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
-
-@interface AddTagViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
+#import "ProgressHUD.h"
+#import "GVUserDefaults+Properties.h"
+#import "ShareBarrierFreeAPIS.h"
+@interface AddTagViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>{
+    BMKPointAnnotation* pointAnnotation;
+}
 
 @end
 
@@ -28,8 +32,26 @@
     UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveNewTag)];
     //initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveNewTag)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
-    if (self.currentLocation != nil) {
-        describeText.text = self.currentLocation;
+    
+    [mapView setZoomLevel:18];
+    mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    [self addPointAnnotation];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [mapView viewWillAppear];
+    mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [mapView viewWillDisappear];
+    mapView.delegate = nil; // 不用时，置nil
+}
+
+- (void)dealloc {
+    if (mapView) {
+        mapView = nil;
     }
 }
 
@@ -151,7 +173,6 @@
     [picker dismissViewControllerAnimated:YES completion:^() {
         UIImage *portraitImg = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
         [imageView setImage:portraitImg];
-       // [self compressPicture];
     }];
 }
 
@@ -160,18 +181,98 @@
     }];
 }
 
+#pragma mark - add PointAnnotation
+-(void) addPointAnnotation{
+    
+    NSArray* array = [NSArray arrayWithArray:mapView.annotations];
+    [mapView removeAnnotations:array];
+    
+    pointAnnotation = [[BMKPointAnnotation alloc]init];
+    pointAnnotation.coordinate = _pt;
+    pointAnnotation.title = @"拖拽到设施位置";
+    [mapView addAnnotation:pointAnnotation];
+    [mapView setNeedsDisplay];
+
+    mapView.centerCoordinate = _pt;
+}
+
+//根据anntation生成对应的View
+- (BMKAnnotationView *)mapView:(BMKMapView *)view viewForAnnotation:(id <BMKAnnotation>)annotation
+{
+    NSString *AnnotationViewID = @"annotationViewID";
+    //根据指定标识查找一个可被复用的标注View，一般在delegate中使用，用此函数来代替新申请一个View
+    BMKPinAnnotationView *annotationView = (BMKPinAnnotationView *)[view dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
+    if (annotationView == nil) {
+        annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
+        ((BMKPinAnnotationView*)annotationView).pinColor = BMKPinAnnotationColorRed;
+        ((BMKPinAnnotationView*)annotationView).animatesDrop = YES;
+        // 设置是否可以拖拽
+        [((BMKPinAnnotationView*)annotationView) setDraggable:YES];
+    }
+    
+    annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
+    annotationView.annotation = annotation;
+    annotationView.canShowCallout = TRUE;
+
+    return annotationView;
+}
+
 #pragma mark - picture compress
--(NSData*) compressPicture{
-    NSData *imageData = UIImageJPEGRepresentation(imageView.image,0.01);
-   NSLog(@"%@",imageData);
+-(NSString*) compressPicture{
+    NSData *imageData = UIImageJPEGRepresentation(imageView.image,0.001);
+   //NSLog(@"%@",imageData);
     //UIImage *resultImage = [UIImage imageWithData:imageData];
-    return imageData;
+    NSString *str = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return str;
 }
 
 -(void)saveNewTag{
-    NSLog(@"success saved");
+    //NSLog(@"success saved %f,%f,%@",_pt.latitude,_pt.longitude,describeText.text);
 //    NSData *imageData = [self compressPicture];
 //    NSString *tagDescribe = [NSString stringWithFormat:@"%@",describeText.text];
+    [ProgressHUD show:@"正在上传"];
+    self.view.userInteractionEnabled = false;
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    //获取当前时间
+    NSDate *  sendDate=[NSDate date];
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"YYYY-MM-dd HH:MM:SS"];
+    NSString *  dateString=[dateformatter stringFromDate:sendDate];
+    
+    [dic setObject:titleText.text forKey:@"title"];
+    [dic setObject:detailDescrption.text forKey:@"description"];
+    [dic setObject:dateString forKey:@"time"];
+    [dic setObject:[NSNumber numberWithInteger:[GVUserDefaults standardUserDefaults].userId] forKey:@"user_id"];
+    
+    double longtitude = pointAnnotation.coordinate.longitude;
+    double latitude = pointAnnotation.coordinate.latitude;
+    if (longtitude > 0) {
+        [dic setObject:@"E" forKey:@"longitude_index"];
+    }else{
+        [dic setObject:@"W" forKey:@"longitude_index"];
+    }
+    if (latitude > 0) {
+        [dic setObject:@"N" forKey:@"latitude_index"];
+    }else{
+        [dic setObject:@"S" forKey:@"latitude_index"];
+    }
+    [dic setObject:[NSNumber numberWithDouble:fabs(longtitude)] forKey:@"longitude"];
+    [dic setObject:[NSNumber numberWithDouble:fabs(latitude)] forKey:@"latitude"];
+    
+    [dic setObject:[self compressPicture] forKey:@"picture"];
+    
+    dispatch_async(serverQueue, ^{
+        NSDictionary *resultDic = [ShareBarrierFreeAPIS UploadOneTag:dic];
+        if ([[resultDic objectForKey:@"result"] isEqualToString:@"success"]) {
+            [self performSelectorOnMainThread:@selector(successWithMessage:) withObject:@"发布成功" waitUntilDone:YES];
+            
+        }else
+        {
+            [self performSelectorOnMainThread:@selector(errorWithMessage:) withObject:@"发布失败" waitUntilDone:YES];
+            return ;
+        }
+    });
+
 }
 
 //点击空白区域，键盘收起
@@ -179,4 +280,20 @@
 {
     [self.view endEditing:YES];
 }
+
+- (void) successWithMessage:(NSString *)message {
+    [self.view setUserInteractionEnabled:true];
+    [ProgressHUD showSuccess:message];
+}
+
+- (void) errorWithMessage:(NSString *)message {
+    [self.view setUserInteractionEnabled:true];
+    [ProgressHUD showError:message];
+}
+
+//- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
+//{
+//    _pt = newCoordinate;
+//    NSLog(@"DDd");
+//}
 @end

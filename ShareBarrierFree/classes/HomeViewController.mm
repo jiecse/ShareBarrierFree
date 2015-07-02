@@ -10,12 +10,14 @@
 #import "NavigationViewController.h"
 #import "AddTagViewController.h"
 #import "TagDetailViewController.h"
-
+#import "ShareBarrierFreeAPIS.h"
 #import "ProgressHUD.h"
+#import "LocationInfo.h"
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
 @interface HomeViewController (){
     bool isGeoSearch;
+    BMKPointAnnotation* pointAnnotation;
     
 }
 
@@ -73,8 +75,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
-    _mapView.delegate = nil; // 不用时，置nil
-    _locService.delegate = nil;
+//    _mapView.delegate = nil; // 不用时，置nil
+//    _locService.delegate = nil;
 }
 
 - (void)viewWillLayoutSubviews
@@ -96,89 +98,77 @@
     [_mapView removeAnnotations:array];
     
     dispatch_async(kBgQueue, ^{
-        //NSDictionary *oneDayGPSData = [SmartHomeAPIs GetOneDayGPSData:_searchDate.text];
-//        if ([[oneDayGPSData objectForKey:@"result"] isEqualToString:@"fail"]) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"获取gps数据失败" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                [alertView show];
-//            });
-//            return;
-//        } else {
-//            
-//            NSArray *gpsDataList = [oneDayGPSData objectForKey:@"data"];
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                int len = [gpsDataList count];
-//                if (len == 0) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        
-//                        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"当日数据为空" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//                        [alertView show];
-//                    });
-//                    return;
-//                }
-//                for (int i=0; i<len; i++) {
-//                    isGeoSearch = false;
-//                    _geocodesearch = [[BMKGeoCodeSearch alloc]init];
-//                    _geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
-//                    NSDictionary *dic = [gpsDataList objectAtIndex:i];
-//                    NSString *lon = [dic objectForKey:@"longitude"];
-//                    NSString *lat = [dic objectForKey:@"latitude"];
-//                    
-//                    double longitude = [[lon substringWithRange:NSMakeRange(0, 3)] doubleValue] + [[lon substringFromIndex:3] doubleValue]/60;
-//                    double latitude = [[lat substringWithRange:NSMakeRange(0, 2)] doubleValue] + [[lat substringFromIndex:2] doubleValue]/60;
-//                    
-//                    [self reverseGeocode:latitude andLongtitude:longitude];
-//                    _geocodesearch = nil;
-//                    _geocodesearch.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
-//                }
-//            });
-//            
-//        }
-        NSArray *gpsList = @[
-        @{@"lng": @121.606153, @"lat": @31.197365},
-        @{@"lng": @121.606765, @"lat": @31.197322},
-        @{@"lng": @121.604553, @"lat": @31.197765},
-        @{@"lng": @121.606475, @"lat": @31.197355}];
-        NSUInteger len = [gpsList count];
-        for (int i=0; i<len; i++) {
+        NSDictionary *nearbyBarrierFrees = [ShareBarrierFreeAPIS SearchNearbyBarrierFree:_longitude latitude:_latitude];
+        //NSDictionary *nearbyBarrierFrees = [ShareBarrierFreeAPIS SearchNearbyBarrierFree:110.9 latitude:23.89];
+
+        if ([[nearbyBarrierFrees objectForKey:@"result"] isEqualToString:@"fail"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"获取数据失败" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alertView show];
+            });
+            return;
+        } else {
             
-            NSDictionary *dic = [gpsList objectAtIndex:i];
-            float lon = [[dic objectForKey:@"lng"] floatValue];
-            float lat = [[dic objectForKey:@"lat"] floatValue];
+            _locationInfoArray = [LocationInfo getLocationInfos:[nearbyBarrierFrees objectForKey:@"data"]];
+            if ([_locationInfoArray count] == 0) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"附近没有配备无障碍设施的场所" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alertView show];
+                });
+                return;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+
+                [self addPointAnnotations];
+            });
             
-            [self reverseGeocode:lat andLongtitude:lon];
             
         }
+        
+        
+        //        NSArray *gpsList = @[
+        //                             @{@"lng": @121.606153, @"lat": @31.197365},
+        //                             @{@"lng": @121.606765, @"lat": @31.197322},
+        //                             @{@"lng": @121.604553, @"lat": @31.197765},
+        //                             @{@"lng": @121.606475, @"lat": @31.197355}];
+        //        NSUInteger len = [gpsList count];
+        //        for (int i=0; i<len; i++) {
+        //
+        //            NSDictionary *dic = [gpsList objectAtIndex:i];
+        //            float lon = [[dic objectForKey:@"lng"] floatValue];
+        //            float lat = [[dic objectForKey:@"lat"] floatValue];
+        //
+        //            [self reverseGeocode:lat andLongtitude:lon];
+        //
+        //        }
     });
 }
 
 -(void)addTag{
     _reverseGeoCodeType = AddTagReverseGeoCode;
-    NSLog(@"lat=%f,lon=%f",self.latitude,self.longitude);
+    //NSLog(@"lat=%f,lon=%f",self.latitude,self.longitude);
     if (_isGetLatLong == false) {
-        [ProgressHUD showError:@"未获取当前设备位置"];
+        _pt.latitude = 31.304612;
+        _pt.longitude = 121.509937;
     }else{
-        BOOL isSuccess = [self reverseGeocode:self.latitude andLongtitude:self.longitude];
-        if (isSuccess ==false) {
-            AddTagViewController *addTagViewController = [[AddTagViewController alloc] initWithNibName:@"AddTagViewController" bundle:nil];
-            [addTagViewController.navigationItem setTitle:@"添加标记"];
-            [self.navigationController pushViewController:addTagViewController animated:YES];
-            
-
-        }
+        _pt.latitude = self.latitude;
+        _pt.longitude = self.longitude;
     }
-
+    
+//    BOOL isSuccess = [self reverseGeocode:self.latitude andLongtitude:self.longitude];
+    //    if (isSuccess ==false) {
+    AddTagViewController *addTagViewController = [[AddTagViewController alloc] initWithNibName:@"AddTagViewController" bundle:nil];
+    [addTagViewController.navigationItem setTitle:@"添加标记"];
+    [addTagViewController setPt:_pt];
+    [self.navigationController pushViewController:addTagViewController animated:YES];
+        
+        
+//    }
+    
     
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 ////开始定位
 //-(void)startLoaction{
 //    NSLog(@"进入普通定位态");
@@ -271,7 +261,6 @@
     
 }
 
-#pragma mark - 反地理编码 标记点
 
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
 {
@@ -292,11 +281,19 @@
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view
 {
     CLLocationCoordinate2D viewLocation =[view.annotation coordinate];
-    NSString * viewAddress = [view.annotation title];
-    NSLog(@"CLLocationCoordinate2D %f,%f,%@",viewLocation.latitude,viewLocation.longitude,viewAddress);
-    TagDetailViewController *tagDetailViewController = [[TagDetailViewController alloc] initWithNibName:@"TagDetailViewController" bundle:nil];
-    tagDetailViewController.currentAddress = viewAddress;
-    [self.navigationController pushViewController:tagDetailViewController animated:YES];
+    NSUInteger len = [_locationInfoArray count];
+    for (int i=0; i<len; i++) {
+        
+        LocationInfo *info = [_locationInfoArray objectAtIndex:i];
+        //NSLog(@"%f=%f,%f=%f",info.latitude, viewLocation.latitude, info.longtitude, viewLocation.longitude);
+        if (info.latitude == viewLocation.latitude && info.longtitude == viewLocation.longitude) {
+            [self switchToTagDetailVC:info];
+            break;
+        }
+    }
+    
+    //NSLog(@"CLLocationCoordinate2D %f,%f,%@",viewLocation.latitude,viewLocation.longitude,viewAddress);
+    
 }
 
 //根据anntation生成对应的View
@@ -304,7 +301,7 @@
 {
     NSString *AnnotationViewID = @"annotationViewID";
     //根据指定标识查找一个可被复用的标注View，一般在delegate中使用，用此函数来代替新申请一个View
-    BMKAnnotationView *annotationView = [view dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
+    BMKAnnotationView *annotationView = (BMKPinAnnotationView *)[view dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
     if (annotationView == nil) {
         annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
         ((BMKPinAnnotationView*)annotationView).pinColor = BMKPinAnnotationColorRed;
@@ -319,6 +316,7 @@
     return annotationView;
 }
 
+#pragma mark - 反地理编码 标记点
 
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
 {
@@ -343,12 +341,10 @@
             //        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
             //        [myAlertView show];
         }else if(_reverseGeoCodeType == AddTagReverseGeoCode) {
-//            if ([result.address isEqual:@""]) {
-//                return;
-//            }
+            
             AddTagViewController *addTagViewController = [[AddTagViewController alloc] initWithNibName:@"AddTagViewController" bundle:nil];
-            [addTagViewController setCurrentLocation:result.address];
             [addTagViewController.navigationItem setTitle:@"添加标记"];
+            [addTagViewController setPt:_pt];
             [self.navigationController pushViewController:addTagViewController animated:YES];
         }
         
@@ -363,8 +359,8 @@
     CLLocationCoordinate2D pt = (CLLocationCoordinate2D){0, 0};
     pt = (CLLocationCoordinate2D){lat, lon};
     //转换GPS坐标至百度坐标
-//    NSDictionary *GPSDic = BMKConvertBaiduCoorFrom(pt,BMK_COORDTYPE_GPS);
-//    pt = BMKCoorDictionaryDecode(GPSDic);
+    //    NSDictionary *GPSDic = BMKConvertBaiduCoorFrom(pt,BMK_COORDTYPE_GPS);
+    //    pt = BMKCoorDictionaryDecode(GPSDic);
     
     BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     reverseGeocodeSearchOption.reverseGeoPoint = pt;
@@ -372,7 +368,7 @@
     
     _geocodesearch = nil;
     _geocodesearch.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
-
+    
     if(flag)
     {
         return true;
@@ -384,5 +380,76 @@
         return false;
     }
     
+}
+
+-(void) addPointAnnotations{
+    if (_reverseGeoCodeType == SearchTagReverseGeoCode) {
+        NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+        [_mapView removeAnnotations:array];
+        NSUInteger len = [_locationInfoArray count];
+        for (int i=0; i<len; i++) {
+            LocationInfo *info = [_locationInfoArray objectAtIndex:i];
+            CLLocationCoordinate2D coor;
+            coor.latitude = info.latitude;
+            coor.longitude = info.longtitude;
+            [self addPointAnnotation:coor title:info.title];
+        }
+        _mapView.centerCoordinate = (CLLocationCoordinate2D){_latitude, _longitude};
+    }
+}
+
+//添加标注
+- (void)addPointAnnotation:(CLLocationCoordinate2D)coordinate title:(NSString*)title
+{
+    pointAnnotation = [[BMKPointAnnotation alloc]init];
+    
+    pointAnnotation.coordinate = coordinate;
+    pointAnnotation.title = title;
+    [_mapView addAnnotation:pointAnnotation];
+    [_mapView setNeedsDisplay];
+    NSLog(@"addPointAnnotation");
+}
+#pragma mark - 联系TagDetailVC
+-(void) switchToTagDetailVC:(LocationInfo*)info{
+    [ProgressHUD show:@"正在获取详细信息"];
+    self.view.userInteractionEnabled = false;
+    
+    dispatch_async(serverQueue, ^{
+        NSDictionary *resultDic = [ShareBarrierFreeAPIS GetDetailDescription:info.infoId];
+        
+        if ([[resultDic objectForKey:@"result"] isEqualToString:@"success"]) {
+            [info setDetailDescription:[[resultDic objectForKey:@"infomation"] objectForKey:@"description"]];
+            [info setPictureUrl:[[resultDic objectForKey:@"infomation"] objectForKey:@"picture_url"]];
+            [info setUserId:[[[resultDic objectForKey:@"infomation"] objectForKey:@"user_id"] intValue]];
+            [self performSelectorOnMainThread:@selector(successWithMessage:) withObject:@"获取成功" waitUntilDone:YES];
+            [self performSelectorOnMainThread:@selector(switchNextViewController:) withObject:info waitUntilDone:YES];
+            return ;
+        }
+        else//登录出错
+        {
+            [self performSelectorOnMainThread:@selector(errorWithMessage:) withObject:@"获取失败！" waitUntilDone:YES];
+            return ;
+        }
+    });
+
+    
+
+}
+
+- (void) successWithMessage:(NSString *)message {
+    [self.view setUserInteractionEnabled:true];
+    [ProgressHUD showSuccess:message];
+}
+
+- (void) errorWithMessage:(NSString *)message {
+    [self.view setUserInteractionEnabled:true];
+    [ProgressHUD showError:message];
+}
+
+- (void)switchNextViewController:(LocationInfo*)info
+{
+    TagDetailViewController *tagDetailViewController = [[TagDetailViewController alloc] initWithNibName:@"TagDetailViewController" bundle:nil];
+    tagDetailViewController.locationInfo = info;
+    [self.navigationController pushViewController:tagDetailViewController animated:YES];
 }
 @end

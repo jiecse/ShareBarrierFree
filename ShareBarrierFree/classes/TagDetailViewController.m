@@ -16,8 +16,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [addressTextView setText:_currentAddress];
-    [currentImageView setImage:[UIImage imageNamed:@"Icon_Home"]];
+    [titleInfo setText:self.locationInfo.title];
+    [timeInfo setText:[NSString stringWithFormat:@"发布时间：%@",self.locationInfo.time]];
+    [usernameInfo setText:[NSString stringWithFormat:@"发布者ID：%d",self.locationInfo.userId]];
+    [detailDescription setText:[NSString stringWithFormat:@"详细描述：%@",self.locationInfo.detailDescription]];
+    //[currentImageView setImage:[UIImage imageNamed:@"Icon_Home"]];
+    NSLog(@"pictureURL=%@",self.locationInfo.pictureUrl);
 }
 
 - (void)didReceiveMemoryWarning {

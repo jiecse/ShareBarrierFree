@@ -30,7 +30,6 @@
 		60D7C4301B291AB600FEECD6 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 60D7C42F1B291AB600FEECD6 /* Podfile */; };
 		60E6CB801B2A66AE00323CE4 /* AddTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CB7E1B2A66AE00323CE4 /* AddTagViewController.m */; };
 		60E6CB811B2A66AE00323CE4 /* AddTagViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E6CB7F1B2A66AE00323CE4 /* AddTagViewController.xib */; };
-		60E6CB831B2A85D500323CE4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60E6CB821B2A85D500323CE4 /* Default-568h@2x.png */; };
 		60E6CB871B2AAC7B00323CE4 /* TagDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CB851B2AAC7B00323CE4 /* TagDetailViewController.m */; };
 		60E6CB881B2AAC7B00323CE4 /* TagDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E6CB861B2AAC7B00323CE4 /* TagDetailViewController.xib */; };
 		60E6CB8D1B2E6BBC00323CE4 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 60E6CB8A1B2E6BBC00323CE4 /* ProgressHUD.bundle */; };
@@ -48,6 +47,17 @@
 		60E6CBBC1B2E8D3700323CE4 /* LJCommonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBB21B2E8D3700323CE4 /* LJCommonItem.m */; };
 		60E6CBBD1B2E8D3700323CE4 /* LJCommonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBB41B2E8D3700323CE4 /* LJCommonCell.m */; };
 		60E6CBBE1B2E8D3700323CE4 /* LJCommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBB61B2E8D3700323CE4 /* LJCommonViewController.m */; };
+		60E6CBC41B325A2900323CE4 /* LocationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBC31B325A2900323CE4 /* LocationInfo.m */; };
+		60E6CBC81B40E81700323CE4 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBC61B40E81700323CE4 /* RegisterViewController.m */; };
+		60E6CBC91B40E81700323CE4 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E6CBC71B40E81700323CE4 /* RegisterViewController.xib */; };
+		60E6CBCC1B41178E00323CE4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBCB1B41178E00323CE4 /* User.m */; };
+		60E6CBD41B4127BF00323CE4 /* GVUserDefaults+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBD31B4127BF00323CE4 /* GVUserDefaults+Properties.m */; };
+		60E6CBD81B413CCE00323CE4 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBD61B413CCE00323CE4 /* ActivityViewController.m */; };
+		60E6CBD91B413CCE00323CE4 /* ActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E6CBD71B413CCE00323CE4 /* ActivityViewController.xib */; };
+		60E6CBDF1B415A4000323CE4 /* Moment.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBDE1B415A4000323CE4 /* Moment.m */; };
+		60E6CBE31B4256D100323CE4 /* UserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E6CBE11B4256D100323CE4 /* UserDetailViewController.m */; };
+		60E6CBE41B4256D100323CE4 /* UserDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E6CBE21B4256D100323CE4 /* UserDetailViewController.xib */; };
+		60E6CBE61B440B5B00323CE4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60E6CBE51B440B5B00323CE4 /* Default-568h@2x.png */; };
 		E4361D49171EE395F5B92260 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C425762EC8C1432813180DE /* libPods.a */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
@@ -97,7 +107,6 @@
 		60E6CB7D1B2A66AE00323CE4 /* AddTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTagViewController.h; sourceTree = "<group>"; };
 		60E6CB7E1B2A66AE00323CE4 /* AddTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTagViewController.m; sourceTree = "<group>"; };
 		60E6CB7F1B2A66AE00323CE4 /* AddTagViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTagViewController.xib; sourceTree = "<group>"; };
-		60E6CB821B2A85D500323CE4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		60E6CB841B2AAC7B00323CE4 /* TagDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagDetailViewController.h; sourceTree = "<group>"; };
 		60E6CB851B2AAC7B00323CE4 /* TagDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagDetailViewController.m; sourceTree = "<group>"; };
 		60E6CB861B2AAC7B00323CE4 /* TagDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagDetailViewController.xib; sourceTree = "<group>"; };
@@ -128,6 +137,24 @@
 		60E6CBB41B2E8D3700323CE4 /* LJCommonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJCommonCell.m; sourceTree = "<group>"; };
 		60E6CBB51B2E8D3700323CE4 /* LJCommonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJCommonViewController.h; sourceTree = "<group>"; };
 		60E6CBB61B2E8D3700323CE4 /* LJCommonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJCommonViewController.m; sourceTree = "<group>"; };
+		60E6CBC21B325A2900323CE4 /* LocationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationInfo.h; sourceTree = "<group>"; };
+		60E6CBC31B325A2900323CE4 /* LocationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationInfo.m; sourceTree = "<group>"; };
+		60E6CBC51B40E81700323CE4 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		60E6CBC61B40E81700323CE4 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		60E6CBC71B40E81700323CE4 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		60E6CBCA1B41178E00323CE4 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		60E6CBCB1B41178E00323CE4 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		60E6CBD21B4127BF00323CE4 /* GVUserDefaults+Properties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GVUserDefaults+Properties.h"; sourceTree = "<group>"; };
+		60E6CBD31B4127BF00323CE4 /* GVUserDefaults+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GVUserDefaults+Properties.m"; sourceTree = "<group>"; };
+		60E6CBD51B413CCE00323CE4 /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController.h; sourceTree = "<group>"; };
+		60E6CBD61B413CCE00323CE4 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
+		60E6CBD71B413CCE00323CE4 /* ActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityViewController.xib; sourceTree = "<group>"; };
+		60E6CBDD1B415A4000323CE4 /* Moment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Moment.h; sourceTree = "<group>"; };
+		60E6CBDE1B415A4000323CE4 /* Moment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Moment.m; sourceTree = "<group>"; };
+		60E6CBE01B4256D100323CE4 /* UserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailViewController.h; sourceTree = "<group>"; };
+		60E6CBE11B4256D100323CE4 /* UserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailViewController.m; sourceTree = "<group>"; };
+		60E6CBE21B4256D100323CE4 /* UserDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailViewController.xib; sourceTree = "<group>"; };
+		60E6CBE51B440B5B00323CE4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E580E817B2C76D083A15CA97 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,7 +190,7 @@
 		60D7C3FC1B29172600FEECD6 = {
 			isa = PBXGroup;
 			children = (
-				60E6CB821B2A85D500323CE4 /* Default-568h@2x.png */,
+				60E6CBE51B440B5B00323CE4 /* Default-568h@2x.png */,
 				60E6CBA41B2E85D600323CE4 /* Settings.bundle */,
 				604894081B2940C2000193DE /* mapapi.bundle */,
 				60D7C42F1B291AB600FEECD6 /* Podfile */,
@@ -187,12 +214,12 @@
 		60D7C4071B29172600FEECD6 /* ShareBarrierFree */ = {
 			isa = PBXGroup;
 			children = (
+				60D7C40C1B29172600FEECD6 /* AppDelegate.h */,
+				60D7C40D1B29172600FEECD6 /* AppDelegate.m */,
 				60E6CBA61B2E8D2100323CE4 /* CustomCell */,
 				60E6CB9D1B2E773700323CE4 /* APIS */,
 				60E6CB891B2E6BB200323CE4 /* ProgressHUD */,
 				60D7C42E1B29178900FEECD6 /* classes */,
-				60D7C40C1B29172600FEECD6 /* AppDelegate.h */,
-				60D7C40D1B29172600FEECD6 /* AppDelegate.m */,
 				604893DF1B292E56000193DE /* Images.xcassets */,
 				60D7C4081B29172600FEECD6 /* Supporting Files */,
 			);
@@ -229,21 +256,13 @@
 		60D7C42E1B29178900FEECD6 /* classes */ = {
 			isa = PBXGroup;
 			children = (
-				60E6CB8F1B2E732900323CE4 /* login */,
 				604893B91B2924D3000193DE /* NavigationViewController.h */,
 				604893BA1B2924D3000193DE /* NavigationViewController.m */,
-				604893BC1B292534000193DE /* HomeViewController.h */,
-				604893BD1B292534000193DE /* HomeViewController.mm */,
-				604893BE1B292534000193DE /* HomeViewController.xib */,
-				604893C11B292589000193DE /* ProfileViewController.h */,
-				604893C21B292589000193DE /* ProfileViewController.m */,
-				604893C31B292589000193DE /* ProfileViewController.xib */,
-				60E6CB7D1B2A66AE00323CE4 /* AddTagViewController.h */,
-				60E6CB7E1B2A66AE00323CE4 /* AddTagViewController.m */,
-				60E6CB7F1B2A66AE00323CE4 /* AddTagViewController.xib */,
-				60E6CB841B2AAC7B00323CE4 /* TagDetailViewController.h */,
-				60E6CB851B2AAC7B00323CE4 /* TagDetailViewController.m */,
-				60E6CB861B2AAC7B00323CE4 /* TagDetailViewController.xib */,
+				60E6CBC11B3259D500323CE4 /* entity */,
+				60E6CB8F1B2E732900323CE4 /* login */,
+				60E6CBDA1B413CFD00323CE4 /* home */,
+				60E6CBDC1B413D4C00323CE4 /* activity */,
+				60E6CBDB1B413D3200323CE4 /* setting */,
 			);
 			path = classes;
 			sourceTree = "<group>";
@@ -266,6 +285,9 @@
 				60E6CB981B2E771C00323CE4 /* LoginViewController.h */,
 				60E6CB991B2E771C00323CE4 /* LoginViewController.m */,
 				60E6CB9A1B2E771C00323CE4 /* LoginViewController.xib */,
+				60E6CBC51B40E81700323CE4 /* RegisterViewController.h */,
+				60E6CBC61B40E81700323CE4 /* RegisterViewController.m */,
+				60E6CBC71B40E81700323CE4 /* RegisterViewController.xib */,
 			);
 			name = login;
 			sourceTree = "<group>";
@@ -300,6 +322,60 @@
 				60E6CBB61B2E8D3700323CE4 /* LJCommonViewController.m */,
 			);
 			name = CustomCell;
+			sourceTree = "<group>";
+		};
+		60E6CBC11B3259D500323CE4 /* entity */ = {
+			isa = PBXGroup;
+			children = (
+				60E6CBC21B325A2900323CE4 /* LocationInfo.h */,
+				60E6CBC31B325A2900323CE4 /* LocationInfo.m */,
+				60E6CBCA1B41178E00323CE4 /* User.h */,
+				60E6CBCB1B41178E00323CE4 /* User.m */,
+				60E6CBD21B4127BF00323CE4 /* GVUserDefaults+Properties.h */,
+				60E6CBD31B4127BF00323CE4 /* GVUserDefaults+Properties.m */,
+				60E6CBDD1B415A4000323CE4 /* Moment.h */,
+				60E6CBDE1B415A4000323CE4 /* Moment.m */,
+			);
+			name = entity;
+			sourceTree = "<group>";
+		};
+		60E6CBDA1B413CFD00323CE4 /* home */ = {
+			isa = PBXGroup;
+			children = (
+				604893BC1B292534000193DE /* HomeViewController.h */,
+				604893BD1B292534000193DE /* HomeViewController.mm */,
+				604893BE1B292534000193DE /* HomeViewController.xib */,
+				60E6CB7D1B2A66AE00323CE4 /* AddTagViewController.h */,
+				60E6CB7E1B2A66AE00323CE4 /* AddTagViewController.m */,
+				60E6CB7F1B2A66AE00323CE4 /* AddTagViewController.xib */,
+				60E6CB841B2AAC7B00323CE4 /* TagDetailViewController.h */,
+				60E6CB851B2AAC7B00323CE4 /* TagDetailViewController.m */,
+				60E6CB861B2AAC7B00323CE4 /* TagDetailViewController.xib */,
+			);
+			name = home;
+			sourceTree = "<group>";
+		};
+		60E6CBDB1B413D3200323CE4 /* setting */ = {
+			isa = PBXGroup;
+			children = (
+				604893C11B292589000193DE /* ProfileViewController.h */,
+				604893C21B292589000193DE /* ProfileViewController.m */,
+				604893C31B292589000193DE /* ProfileViewController.xib */,
+				60E6CBE01B4256D100323CE4 /* UserDetailViewController.h */,
+				60E6CBE11B4256D100323CE4 /* UserDetailViewController.m */,
+				60E6CBE21B4256D100323CE4 /* UserDetailViewController.xib */,
+			);
+			name = setting;
+			sourceTree = "<group>";
+		};
+		60E6CBDC1B413D4C00323CE4 /* activity */ = {
+			isa = PBXGroup;
+			children = (
+				60E6CBD51B413CCE00323CE4 /* ActivityViewController.h */,
+				60E6CBD61B413CCE00323CE4 /* ActivityViewController.m */,
+				60E6CBD71B413CCE00323CE4 /* ActivityViewController.xib */,
+			);
+			name = activity;
 			sourceTree = "<group>";
 		};
 		A60D70C68D32222DA2D31274 /* Pods */ = {
@@ -411,15 +487,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60E6CBC91B40E81700323CE4 /* RegisterViewController.xib in Resources */,
 				60E6CB9C1B2E771C00323CE4 /* LoginViewController.xib in Resources */,
 				604893C51B292589000193DE /* ProfileViewController.xib in Resources */,
+				60E6CBE41B4256D100323CE4 /* UserDetailViewController.xib in Resources */,
+				60E6CBD91B413CCE00323CE4 /* ActivityViewController.xib in Resources */,
+				60E6CBE61B440B5B00323CE4 /* Default-568h@2x.png in Resources */,
 				60D7C4301B291AB600FEECD6 /* Podfile in Resources */,
 				60E6CB881B2AAC7B00323CE4 /* TagDetailViewController.xib in Resources */,
 				604893E01B292E56000193DE /* Images.xcassets in Resources */,
 				604894091B2940C2000193DE /* mapapi.bundle in Resources */,
 				60E6CB8D1B2E6BBC00323CE4 /* ProgressHUD.bundle in Resources */,
 				604893C01B292534000193DE /* HomeViewController.xib in Resources */,
-				60E6CB831B2A85D500323CE4 /* Default-568h@2x.png in Resources */,
 				60E6CBA51B2E85D600323CE4 /* Settings.bundle in Resources */,
 				60E6CB811B2A66AE00323CE4 /* AddTagViewController.xib in Resources */,
 			);
@@ -474,16 +553,23 @@
 			files = (
 				60E6CBA31B2E77D200323CE4 /* ShareBarrierFreeAPIS.m in Sources */,
 				60E6CBBE1B2E8D3700323CE4 /* LJCommonViewController.m in Sources */,
+				60E6CBC41B325A2900323CE4 /* LocationInfo.m in Sources */,
 				604893BB1B2924D3000193DE /* NavigationViewController.m in Sources */,
+				60E6CBC81B40E81700323CE4 /* RegisterViewController.m in Sources */,
 				60E6CBB91B2E8D3700323CE4 /* LJCommonLabelItem.m in Sources */,
+				60E6CBCC1B41178E00323CE4 /* User.m in Sources */,
+				60E6CBD81B413CCE00323CE4 /* ActivityViewController.m in Sources */,
 				60E6CBBA1B2E8D3700323CE4 /* LJBadgeView.m in Sources */,
 				60E6CBB81B2E8D3700323CE4 /* LJCommonSwitchItem.m in Sources */,
+				60E6CBD41B4127BF00323CE4 /* GVUserDefaults+Properties.m in Sources */,
 				60E6CB801B2A66AE00323CE4 /* AddTagViewController.m in Sources */,
 				60E6CBBB1B2E8D3700323CE4 /* LJCommonGroup.m in Sources */,
 				60D7C40E1B29172600FEECD6 /* AppDelegate.m in Sources */,
+				60E6CBDF1B415A4000323CE4 /* Moment.m in Sources */,
 				60E6CB871B2AAC7B00323CE4 /* TagDetailViewController.m in Sources */,
 				60E6CB9B1B2E771C00323CE4 /* LoginViewController.m in Sources */,
 				604893BF1B292534000193DE /* HomeViewController.mm in Sources */,
+				60E6CBE31B4256D100323CE4 /* UserDetailViewController.m in Sources */,
 				604893C41B292589000193DE /* ProfileViewController.m in Sources */,
 				60E6CBBD1B2E8D3700323CE4 /* LJCommonCell.m in Sources */,
 				60E6CB921B2E76B800323CE4 /* RootController.m in Sources */,
@@ -603,6 +689,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -620,6 +707,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

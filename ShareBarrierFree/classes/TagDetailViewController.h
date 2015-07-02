@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LocationInfo.h"
 @interface TagDetailViewController : UIViewController{
 
-    IBOutlet UITextView *addressTextView;
-    IBOutlet UIImageView *currentImageView;
+    __weak IBOutlet UILabel *titleInfo;
+    __weak IBOutlet UILabel *timeInfo;
+    __weak IBOutlet UILabel *usernameInfo;
+    __weak IBOutlet UITextView *detailDescription;
+    __weak IBOutlet UIImageView *currentImageView;
+    
 }
 
-@property(strong,nonatomic) NSString *currentAddress;
+@property(strong,nonatomic) LocationInfo *locationInfo;
 @property(strong,nonatomic) UIImage *currentImage;
 @end

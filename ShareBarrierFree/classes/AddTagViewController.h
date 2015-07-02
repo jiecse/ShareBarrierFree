@@ -7,14 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import <BaiduMapAPI/BMapKit.h>
 
-@interface AddTagViewController : UIViewController{
+@interface AddTagViewController : UIViewController<BMKMapViewDelegate>{
 
-    IBOutlet UITextField *describeText;
+
+    __weak IBOutlet UITextField *titleText;
+    IBOutlet UITextView *detailDescrption;
+    IBOutlet BMKMapView *mapView;
+    
     IBOutlet UIImageView *imageView;
 }
 - (IBAction)uploadPictureBtn:(id)sender;
 - (IBAction)textFiledReturnEditing:(id)sender;
-@property(nonatomic,strong) NSString * currentLocation;
-
+@property(nonatomic,assign) CLLocationCoordinate2D pt;
 @end
