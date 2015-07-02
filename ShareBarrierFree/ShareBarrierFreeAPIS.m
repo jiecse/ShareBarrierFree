@@ -227,8 +227,6 @@ NSString *ipAddr;
     }
     
     return [[NSDictionary alloc]initWithObjectsAndKeys:@"fail",@"result",nil];
-    
-    
 }
 
 //2.4 下载tag的图片

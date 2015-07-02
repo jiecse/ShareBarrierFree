@@ -189,7 +189,7 @@
     
     pointAnnotation = [[BMKPointAnnotation alloc]init];
     pointAnnotation.coordinate = _pt;
-    pointAnnotation.title = @"拖拽到设施位置";
+    pointAnnotation.title = @"长按拖拽到设施位置";
     [mapView addAnnotation:pointAnnotation];
     [mapView setNeedsDisplay];
 
@@ -199,7 +199,7 @@
 //根据anntation生成对应的View
 - (BMKAnnotationView *)mapView:(BMKMapView *)view viewForAnnotation:(id <BMKAnnotation>)annotation
 {
-    NSString *AnnotationViewID = @"annotationViewID";
+    NSString *AnnotationViewID = @"moveAnnotationViewID";
     //根据指定标识查找一个可被复用的标注View，一般在delegate中使用，用此函数来代替新申请一个View
     BMKPinAnnotationView *annotationView = (BMKPinAnnotationView *)[view dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
     if (annotationView == nil) {
@@ -213,9 +213,35 @@
     annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
     annotationView.annotation = annotation;
     annotationView.canShowCallout = TRUE;
+    [annotationView setSelected:YES animated:YES];
 
     return annotationView;
 }
+
+/**
+ *拖动annotation view时，若view的状态发生变化，会调用此函数。ios3.2以后支持
+ *@param mapView 地图View
+ *@param view annotation view
+ *@param newState 新状态
+ *@param oldState 旧状态
+ */
+- (void)mapView:(BMKMapView *)mapView annotationView:(BMKAnnotationView *)view didChangeDragState:(BMKAnnotationViewDragState)newState
+   fromOldState:(BMKAnnotationViewDragState)oldState{
+    if (newState == BMKAnnotationViewDragStateEnding) {
+        NSLog(@"%f,%f",view.annotation.coordinate.latitude,view.annotation.coordinate.longitude);
+        _pt = view.annotation.coordinate;
+    }
+}
+
+/**
+ *点中底图空白处会回调此接口
+ *@param mapview 地图View
+ *@param coordinate 空白处坐标点的经纬度
+ */
+- (void)mapView:(BMKMapView *)mapView onClickedMapBlank:(CLLocationCoordinate2D)coordinate{
+    [self.view endEditing:YES];
+}
+
 
 #pragma mark - picture compress
 -(NSString*) compressPicture{
