@@ -14,7 +14,7 @@
 @property(strong,nonatomic)NSString *address;
 @property(strong,nonatomic)NSString *email;
 @property(strong,nonatomic)NSString *phone;
-@property(nonatomic)int user_id;
+@property(nonatomic)NSInteger user_id;
 
 -(BOOL) verifyInfo:(NSString*)verifyPassword;
 -(void) saveUserInfo:(NSInteger)userId;

@@ -7,7 +7,7 @@
 //
 
 #import "TagDetailViewController.h"
-
+#import "ShareBarrierFreeAPIS.h"
 @interface TagDetailViewController ()
 
 @end
@@ -21,6 +21,7 @@
     [usernameInfo setText:[NSString stringWithFormat:@"发布者ID：%d",self.locationInfo.userId]];
     [detailDescription setText:[NSString stringWithFormat:@"详细描述：%@",self.locationInfo.detailDescription]];
     //[currentImageView setImage:[UIImage imageNamed:@"Icon_Home"]];
+    [self downLoadPicture];
     NSLog(@"pictureURL=%@",self.locationInfo.pictureUrl);
 }
 
@@ -29,14 +30,21 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+-(void) downLoadPicture{
+    dispatch_async(serverQueue, ^{
+        NSData *imageData = [ShareBarrierFreeAPIS DownloadPicture:self.locationInfo.pictureUrl];
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+        [self performSelectorOnMainThread:@selector(changePicture:) withObject:imageData waitUntilDone:YES];
+        return ;
+       
+    });
 }
-*/
+-(void) changePicture:(NSData*) imageData{
+    if(imageData != nil){
+        currentImageView.image = [UIImage imageWithData:imageData];
+    }else {
+        currentImageView.image = [UIImage imageNamed:@"DownloadFail"];
+    }
 
+}
 @end

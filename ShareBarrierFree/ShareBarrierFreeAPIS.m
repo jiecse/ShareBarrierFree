@@ -61,7 +61,9 @@ NSString *ipAddr;
 //1.2 注册用户
 +(NSDictionary *)RegisterUser:(User *)user{
     NSError *error = nil;
-    NSData *requestData = [NSJSONSerialization dataWithJSONObject:user.keyValues options:NSJSONWritingPrettyPrinted error:&error];
+    NSMutableDictionary *dic = user.keyValues;
+    [dic removeObjectForKey:@"user_id"];
+    NSData *requestData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&error];
     
     NSString *josnString = [[NSString alloc] initWithData:requestData encoding:NSUTF8StringEncoding];
     //NSLog(@"jsonString: %@",str);
@@ -230,16 +232,21 @@ NSString *ipAddr;
 }
 
 //2.4 下载tag的图片
-+ (NSDictionary *)DownloadPicture:(NSMutableDictionary *)dic{
++ (NSData *)DownloadPicture:(NSString *)pictureUrl{
     NSError *error=nil;
-    NSURL *url=[NSURL URLWithString:@"http://ww3.sinaimg.cn/mw690/51f76ed7jw1e3ohzmmnffj.jpg"];
+    NSString *urlString = [NSString stringWithFormat:@"http://%@/barrierFree/picture/%@.jpg",ipAddr,pictureUrl];
+    //    NSLog(@"%@",urlString);
+    //
+    NSURL *url=[NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    //NSURL *url=[NSURL URLWithString:@"http://ww3.sinaimg.cn/mw690/51f76ed7jw1e3ohzmmnffj.jpg"];
     NSURLRequest *request=[[NSURLRequest alloc] initWithURL:url];
     NSData *imgData=[NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
-    UIImage *img=nil;
-    if(imgData)
-    {
-        img=[UIImage imageWithData:imgData];
-    }
+    return imgData;
+//    UIImage *img=nil;
+//    if(imgData)
+//    {
+//        img=[UIImage imageWithData:imgData];
+//    }
     
 //    Base64字符串转UIImage图片：
 //    NSData *decodedImageData = [[NSData alloc]

@@ -15,6 +15,7 @@
 #import "RootController.h"
 #import "ProgressHUD.h"
 #import "User.h"
+#import "GVUserDefaults+Properties.h"
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
 @interface ProfileViewController ()
@@ -162,9 +163,10 @@
 -(void)logOutSystem
 {
     //删除userdefaults中的用户信息
-    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-    [userDefaults removeObjectForKey:@"username"];
-    [userDefaults removeObjectForKey:@"password"];
+    [GVUserDefaults standardUserDefaults].userId  = 0;
+    [GVUserDefaults standardUserDefaults].username = @"";
+    
+    [GVUserDefaults standardUserDefaults].password = @"";
     
     RootController *rootController=(RootController *)[UIApplication sharedApplication].keyWindow.rootViewController;
     [rootController switchToLoginView];

@@ -40,7 +40,6 @@ NSString *ipAddr;
 //2.3 上传一条tag
 + (NSDictionary *)UploadOneTag:(NSMutableDictionary *)dic;
 //2.4 下载tag的图片
-+ (NSDictionary *)DownloadPicture:(NSMutableDictionary *)dic;
-
++ (NSData *)DownloadPicture:(NSString *)pictureUrl;
 
 @end

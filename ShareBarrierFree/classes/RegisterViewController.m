@@ -56,7 +56,7 @@
             NSDictionary *resultDic = [ShareBarrierFreeAPIS RegisterUser:self.user];
             if ([[resultDic objectForKey:@"result"] isEqualToString:@"success"]) {
                 
-                //[self.user saveUserInfo:[[resultDic objectForKey:@"user_id"] integerValue]];
+                [self.user setUser_id:[[resultDic objectForKey:@"user_id"] integerValue]];
                 [self performSelectorOnMainThread:@selector(successWithMessage:) withObject:@"注册成功" waitUntilDone:YES];
                // [self performSelectorOnMainThread:@selector(switchNextViewController) withObject:nil waitUntilDone:YES];
 
@@ -105,6 +105,10 @@
 }
 
 - (void) successWithMessage:(NSString *)message {
+    [GVUserDefaults standardUserDefaults].userId = self.user.user_id;
+    [GVUserDefaults standardUserDefaults].username = self.user.username;
+    
+    [GVUserDefaults standardUserDefaults].password = self.user.password;
     [self.view setUserInteractionEnabled:true];
     [ProgressHUD showSuccess:message];
     [self returnToLogin];

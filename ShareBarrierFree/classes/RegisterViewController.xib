@@ -107,7 +107,7 @@
                             <rect key="frame" x="147" y="180" width="154" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                             <connections>
                                 <action selector="moveView:" destination="-1" eventType="editingDidBegin" id="c2a-gK-1ot"/>
                             </connections>
