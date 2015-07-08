@@ -43,6 +43,7 @@
         self.navigationController.navigationBar.translucent = NO;
     }
     [self.navigationItem setTitle:@"主页"];
+    
     // Here self.navigationController is an instance of NavigationViewController (which is a root controller for the main window)
     //
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self.navigationController action:@selector(toggleMenu)];
@@ -54,19 +55,21 @@
     
     _isGetLatLong =false;
     
+    _searchedPointAnnotations =[[BMKMapView alloc] init];
+    
     [_mapView setZoomLevel:18];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _mapView.showsUserLocation = YES;
     _locService = [[BMKLocationService alloc]init];
-    [self startFollowing];
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = self;
+    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+    [_mapView removeAnnotations:array];
+    [self startFollowing];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -94,8 +97,8 @@
 -(void)searchNearby{
     _reverseGeoCodeType = SearchTagReverseGeoCode;
     //删除所有标注
-    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
-    [_mapView removeAnnotations:array];
+//    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+//    [_mapView removeAnnotations:array];
     
     dispatch_async(kBgQueue, ^{
         NSDictionary *nearbyBarrierFrees = [ShareBarrierFreeAPIS SearchNearbyBarrierFree:_longitude latitude:_latitude];
@@ -119,29 +122,9 @@
                 return;
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-
                 [self addPointAnnotations];
             });
-            
-            
         }
-        
-        
-        //        NSArray *gpsList = @[
-        //                             @{@"lng": @121.606153, @"lat": @31.197365},
-        //                             @{@"lng": @121.606765, @"lat": @31.197322},
-        //                             @{@"lng": @121.604553, @"lat": @31.197765},
-        //                             @{@"lng": @121.606475, @"lat": @31.197355}];
-        //        NSUInteger len = [gpsList count];
-        //        for (int i=0; i<len; i++) {
-        //
-        //            NSDictionary *dic = [gpsList objectAtIndex:i];
-        //            float lon = [[dic objectForKey:@"lng"] floatValue];
-        //            float lat = [[dic objectForKey:@"lat"] floatValue];
-        //
-        //            [self reverseGeocode:lat andLongtitude:lon];
-        //
-        //        }
     });
 }
 
@@ -213,7 +196,8 @@
  */
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
-    [_mapView updateLocationData:userLocation];
+    //用于显示设备当前位置
+    //[_mapView updateLocationData:userLocation];
     //NSLog(@"heading is %@",userLocation.heading);
 }
 
@@ -227,7 +211,10 @@
     _isGetLatLong = true;
     self.longitude = userLocation.location.coordinate.longitude;
     self.latitude = userLocation.location.coordinate.latitude;
-    [_mapView updateLocationData:userLocation];
+    CLLocationCoordinate2D userCurrentLocation = CLLocationCoordinate2D{self.latitude,self.longitude};
+    [self addPointAnnotation:userCurrentLocation title:@"长按拖拽到需要搜索的位置"];
+    [self stopLocation];
+    //[_mapView updateLocationData:userLocation];
 }
 
 /**
@@ -313,6 +300,17 @@
     annotationView.canShowCallout = TRUE;
     // 设置是否可以拖拽
     annotationView.draggable = NO;
+    CLLocationCoordinate2D viewLocation =[annotation coordinate];
+
+    NSLog(@"%f=%f,%f=%f",viewLocation.longitude, self.longitude, viewLocation.latitude, self.latitude);
+
+    if (viewLocation.longitude == self.longitude && viewLocation.latitude == self.latitude) {
+        annotationView.draggable = YES;
+        ((BMKPinAnnotationView*)annotationView).pinColor = BMKPinAnnotationColorGreen;
+        _mapView.centerCoordinate = (CLLocationCoordinate2D){_latitude, _longitude};
+        [annotationView setSelected:YES animated:YES];
+
+    }
     return annotationView;
 }
 
@@ -384,8 +382,10 @@
 
 -(void) addPointAnnotations{
     if (_reverseGeoCodeType == SearchTagReverseGeoCode) {
-        NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+        //删除已经搜索到的标签
+        NSArray* array = [NSArray arrayWithArray:_searchedPointAnnotations.annotations];
         [_mapView removeAnnotations:array];
+        
         NSUInteger len = [_locationInfoArray count];
         for (int i=0; i<len; i++) {
             LocationInfo *info = [_locationInfoArray objectAtIndex:i];
@@ -405,9 +405,29 @@
     
     pointAnnotation.coordinate = coordinate;
     pointAnnotation.title = title;
+    
+    if(_longitude != coordinate.longitude || _latitude != coordinate.latitude){
+        [_searchedPointAnnotations addAnnotation:pointAnnotation];
+    }
+    
     [_mapView addAnnotation:pointAnnotation];
     [_mapView setNeedsDisplay];
     NSLog(@"addPointAnnotation");
+}
+
+/**
+ *拖动annotation view时，若view的状态发生变化，会调用此函数。ios3.2以后支持
+ *@param mapView 地图View
+ *@param view annotation view
+ *@param newState 新状态
+ *@param oldState 旧状态
+ */
+- (void)mapView:(BMKMapView *)mapView annotationView:(BMKAnnotationView *)view didChangeDragState:(BMKAnnotationViewDragState)newState
+   fromOldState:(BMKAnnotationViewDragState)oldState{
+    if (newState == BMKAnnotationViewDragStateEnding) {
+        self.longitude =  view.annotation.coordinate.longitude;
+        self.latitude = view.annotation.coordinate.latitude;
+    }
 }
 #pragma mark - 联系TagDetailVC
 -(void) switchToTagDetailVC:(LocationInfo*)info{

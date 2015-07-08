@@ -59,8 +59,7 @@
                                                              ProfileViewController *controller = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil];
                                                              [weakSelf setViewControllers:@[controller] animated:NO];
                                                          }];
-    
-    // You can also assign a custom view for any particular item
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];    // You can also assign a custom view for any particular item
     // Uncomment the code below and add `customViewItem` to `initWithItems` array, for example:
     // self.menu = [[REMenu alloc] initWithItems:@[homeItem, exploreItem, activityItem, profileItem, customViewItem]]
     //

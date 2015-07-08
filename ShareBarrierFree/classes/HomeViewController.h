@@ -31,6 +31,9 @@
 //附近无障碍设施数组
 @property(nonatomic,strong) NSArray *locationInfoArray;
 
+//用于存放搜索到的pointAnnotation数组
+@property(nonatomic,strong) BMKMapView *searchedPointAnnotations;
+
 typedef enum {
     AddTagReverseGeoCode,
     SearchTagReverseGeoCode
