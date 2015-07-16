@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TagDetailViewController">
@@ -10,6 +10,8 @@
                 <outlet property="detailDescription" destination="ZaE-Dp-bpo" id="I0n-Jr-Bkw"/>
                 <outlet property="timeInfo" destination="vBE-ly-E4l" id="DNL-bR-LAW"/>
                 <outlet property="titleInfo" destination="wZZ-VQ-9cB" id="z0k-SM-ULA"/>
+                <outlet property="usefulBarBtn" destination="8BF-iw-dw6" id="Mv6-E6-8Xd"/>
+                <outlet property="uselessBarBtn" destination="1LM-oS-CdJ" id="97U-eX-2Xz"/>
                 <outlet property="usernameInfo" destination="TOb-sI-eLU" id="ko0-2g-KnN"/>
                 <outlet property="view" destination="b6l-7P-9ka" id="Xik-vj-vUS"/>
             </connections>
@@ -58,10 +60,36 @@
                     <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Loading" id="0eR-vf-3F6">
-                    <rect key="frame" x="41" y="196" width="239" height="364"/>
+                    <rect key="frame" x="41" y="196" width="239" height="309"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                 </imageView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="HK7-Cu-sWr">
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem title="有用" id="8BF-iw-dw6">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="usefulCilicked:" destination="-1" id="Mod-pJ-npJ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="5ph-Hr-iyO"/>
+                        <barButtonItem title="没用" id="1LM-oS-CdJ">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="uselessClicked:" destination="-1" id="DHw-HP-yzy"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="aTV-0Q-jYj"/>
+                        <barButtonItem image="share_icon_default" id="abZ-Z6-Yj0">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="shareClicked:" destination="-1" id="nbL-PV-Zku"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
             </subviews>
             <color key="backgroundColor" white="0.8981808850364964" alpha="1" colorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="-139" y="252"/>
@@ -69,6 +97,7 @@
     </objects>
     <resources>
         <image name="Loading" width="450" height="456"/>
+        <image name="share_icon_default" width="44" height="44"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

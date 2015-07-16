@@ -310,6 +310,7 @@
 - (void) successWithMessage:(NSString *)message {
     [self.view setUserInteractionEnabled:true];
     [ProgressHUD showSuccess:message];
+    [self.navigationController popToRootViewControllerAnimated:true];
 }
 
 - (void) errorWithMessage:(NSString *)message {

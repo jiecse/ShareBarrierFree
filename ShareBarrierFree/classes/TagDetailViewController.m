@@ -8,6 +8,8 @@
 
 #import "TagDetailViewController.h"
 #import "ShareBarrierFreeAPIS.h"
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
 @interface TagDetailViewController ()
 
 @end
@@ -46,5 +48,31 @@
         currentImageView.image = [UIImage imageNamed:@"DownloadFail"];
     }
 
+}
+- (IBAction)usefulCilicked:(UIBarButtonItem *)sender {
+    [usefulBarBtn setEnabled:FALSE];
+    [uselessBarBtn setEnabled:FALSE];
+}
+
+- (IBAction)uselessClicked:(UIBarButtonItem *)sender {
+    [usefulBarBtn setEnabled:FALSE];
+    [uselessBarBtn setEnabled:FALSE];
+}
+
+- (IBAction)shareClicked:(UIBarButtonItem *)sender {
+    
+    NSLog(@"点击了分享");
+    
+    //设置微信AppId，设置分享url，默认使用友盟的网址
+    [UMSocialWechatHandler setWXAppId:@"wxc5d237d2bc663e47" appSecret:@"2c074b90798bb134994d4908624c528d" url:@"http://cscw.fudan.edu.cn/"];
+    
+    //利用友盟平台分享
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"55a70eea67e58e08db006827"
+                                      shareText:titleInfo.text
+                                     shareImage:currentImageView.image
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,nil]
+     //[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,nil]
+                                       delegate:nil];
 }
 @end
