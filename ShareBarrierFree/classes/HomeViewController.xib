@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController">
@@ -12,22 +12,32 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" id="6jB-Qe-8KZ" customClass="BMKMapView">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Rcw-qL-iEb">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="4PZ-QZ-LA1"/>
+                    </connections>
+                </searchBar>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6jB-Qe-8KZ" customClass="BMKMapView">
+                    <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="306" y="413"/>
+            <constraints>
+                <constraint firstItem="Rcw-qL-iEb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="12I-ga-jfM"/>
+                <constraint firstItem="6jB-Qe-8KZ" firstAttribute="top" secondItem="Rcw-qL-iEb" secondAttribute="bottom" id="O9P-Jd-bzj"/>
+                <constraint firstItem="Rcw-qL-iEb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lCc-mL-7vX"/>
+                <constraint firstAttribute="trailing" secondItem="Rcw-qL-iEb" secondAttribute="trailing" id="oc8-sn-IMF"/>
+                <constraint firstAttribute="bottom" secondItem="6jB-Qe-8KZ" secondAttribute="bottom" id="pIN-pO-TY6"/>
+                <constraint firstAttribute="trailing" secondItem="6jB-Qe-8KZ" secondAttribute="trailing" id="rWQ-vJ-1Aq"/>
+                <constraint firstItem="6jB-Qe-8KZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uet-dC-dCh"/>
+            </constraints>
+            <point key="canvasLocation" x="260" y="270"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

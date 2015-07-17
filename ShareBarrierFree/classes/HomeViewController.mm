@@ -96,9 +96,10 @@
 
 -(void)searchNearby{
     _reverseGeoCodeType = SearchTagReverseGeoCode;
-    //删除所有标注
-//    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
-//    [_mapView removeAnnotations:array];
+    //删除已经搜索到的标签
+    NSArray* array = [NSArray arrayWithArray:_searchedPointAnnotations.annotations];
+    [_searchedPointAnnotations removeAnnotations:array];
+    [_mapView removeAnnotations:array];
     
     dispatch_async(kBgQueue, ^{
         NSDictionary *nearbyBarrierFrees = [ShareBarrierFreeAPIS SearchNearbyBarrierFree:_longitude latitude:_latitude];
@@ -309,82 +310,136 @@
         ((BMKPinAnnotationView*)annotationView).pinColor = BMKPinAnnotationColorGreen;
         _mapView.centerCoordinate = (CLLocationCoordinate2D){_latitude, _longitude};
         [annotationView setSelected:YES animated:YES];
-
+        
+        //7.17自动搜索附近设备//////////////////////////////////////////////
+        //[self searchNearby];
     }
     return annotationView;
+}
+/**
+ *点中底图空白处会回调此接口
+ *@param mapview 地图View
+ *@param coordinate 空白处坐标点的经纬度
+ */
+- (void)mapView:(BMKMapView *)mapView onClickedMapBlank:(CLLocationCoordinate2D)coordinate{
+    [self.view endEditing:YES];
 }
 
 #pragma mark - 反地理编码 标记点
 
-- (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
-{
-    //    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
-    //    [_mapView removeAnnotations:array];
-    //    array = [NSArray arrayWithArray:_mapView.overlays];
-    //    [_mapView removeOverlays:array];
-    //NSLog(@"onGetReverseGeoCodeResult%d",[[NSArray arrayWithArray:_mapView.annotations] count]);
-    
-    if (error == 0) {
-        if (_reverseGeoCodeType == SearchTagReverseGeoCode) {
-            BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
-            item.coordinate = result.location;
-            item.title = result.address;
-            [_mapView addAnnotation:item];
-            _mapView.centerCoordinate = result.location;
-            //        NSString* titleStr;
-            //        NSString* showmeg;
-            //        titleStr = @"反向地理编码";
-            //        showmeg = [NSString stringWithFormat:@"%@",item.title];
-            //
-            //        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:titleStr message:showmeg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
-            //        [myAlertView show];
-        }else if(_reverseGeoCodeType == AddTagReverseGeoCode) {
-            
-            AddTagViewController *addTagViewController = [[AddTagViewController alloc] initWithNibName:@"AddTagViewController" bundle:nil];
-            [addTagViewController.navigationItem setTitle:@"添加标记"];
-            [addTagViewController setPt:_pt];
-            [self.navigationController pushViewController:addTagViewController animated:YES];
-        }
-        
-    }
-}
+//- (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+//{
+//    
+//    if (error == 0) {
+//        if (_reverseGeoCodeType == SearchTagReverseGeoCode) {
+//            BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+//            item.coordinate = result.location;
+//            item.title = result.address;
+//            [_mapView addAnnotation:item];
+//            _mapView.centerCoordinate = result.location;
+//           
+//        }else if(_reverseGeoCodeType == AddTagReverseGeoCode) {
+//            
+//            AddTagViewController *addTagViewController = [[AddTagViewController alloc] initWithNibName:@"AddTagViewController" bundle:nil];
+//            [addTagViewController.navigationItem setTitle:@"添加标记"];
+//            [addTagViewController setPt:_pt];
+//            [self.navigationController pushViewController:addTagViewController animated:YES];
+//        }
+//        
+//    }
+//}
+//
+//-(BOOL)reverseGeocode:(double)lat andLongtitude:(double)lon
+//{
+//    isGeoSearch = false;
+//    _geocodesearch = [[BMKGeoCodeSearch alloc]init];
+//    _geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+//    CLLocationCoordinate2D pt = (CLLocationCoordinate2D){0, 0};
+//    pt = (CLLocationCoordinate2D){lat, lon};
+//    //转换GPS坐标至百度坐标
+//    //    NSDictionary *GPSDic = BMKConvertBaiduCoorFrom(pt,BMK_COORDTYPE_GPS);
+//    //    pt = BMKCoorDictionaryDecode(GPSDic);
+//    
+//    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+//    reverseGeocodeSearchOption.reverseGeoPoint = pt;
+//    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+//    
+//    _geocodesearch = nil;
+//    _geocodesearch.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
+//    
+//    if(flag)
+//    {
+//        return true;
+//        //NSLog(@"反geo检索发送成功");
+//    }
+//    else
+//    {
+//        NSLog(@"反geo检索发送失败");
+//        return false;
+//    }
+//    
+//}
 
--(BOOL)reverseGeocode:(double)lat andLongtitude:(double)lon
+#pragma mark - 地理编码 标记点
+-(BOOL)beginGeocode:(NSString*)cityText andAddress:(NSString*) addrText
 {
-    isGeoSearch = false;
+    isGeoSearch = true;
     _geocodesearch = [[BMKGeoCodeSearch alloc]init];
     _geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
-    CLLocationCoordinate2D pt = (CLLocationCoordinate2D){0, 0};
-    pt = (CLLocationCoordinate2D){lat, lon};
-    //转换GPS坐标至百度坐标
-    //    NSDictionary *GPSDic = BMKConvertBaiduCoorFrom(pt,BMK_COORDTYPE_GPS);
-    //    pt = BMKCoorDictionaryDecode(GPSDic);
+   
     
-    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-    reverseGeocodeSearchOption.reverseGeoPoint = pt;
-    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+    BMKGeoCodeSearchOption *geocodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
+    //geocodeSearchOption.city= cityText;
+    geocodeSearchOption.address = addrText;
+    BOOL flag = [_geocodesearch geoCode:geocodeSearchOption];
     
-    _geocodesearch = nil;
-    _geocodesearch.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
-    
+//    _geocodesearch.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
+//    _geocodesearch = nil;
+
     if(flag)
     {
+        NSLog(@"geo检索发送成功");
         return true;
-        //NSLog(@"反geo检索发送成功");
     }
     else
     {
-        NSLog(@"反geo检索发送失败");
+        NSLog(@"geo检索发送失败");
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"搜索发送失败" message:@"请检查您的网络，重试" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+        [myAlertView show];
         return false;
     }
     
 }
+/**
+ *返回地址信息搜索结果
+ *@param searcher 搜索对象
+ *@param result 搜索结BMKGeoCodeSearch果
+ *@param error 错误号，@see BMKSearchErrorCode
+ */
+- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+{
+    if (error == BMK_SEARCH_NO_ERROR) {
+        _isGetLatLong = true;
+        
+        NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+        [_mapView removeAnnotations:array];
+        
+        self.longitude = result.location.longitude;
+        self.latitude = result.location.latitude;
+        CLLocationCoordinate2D userCurrentLocation = CLLocationCoordinate2D{self.latitude,self.longitude};
+        [self addPointAnnotation:userCurrentLocation title:@"长按拖拽到需要搜索的位置"];
+    }else{
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"搜索失败" message:@"请输入明确地理信息，重新搜索" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+        [myAlertView show];
 
+    }
+    _geocodesearch.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    _geocodesearch = nil;
+}
+
+#pragma mark - 添加大头针
 -(void) addPointAnnotations{
     if (_reverseGeoCodeType == SearchTagReverseGeoCode) {
-        //删除已经搜索到的标签
-        NSArray* array = [NSArray arrayWithArray:_searchedPointAnnotations.annotations];
-        [_mapView removeAnnotations:array];
         
         NSUInteger len = [_locationInfoArray count];
         for (int i=0; i<len; i++) {
@@ -427,6 +482,9 @@
     if (newState == BMKAnnotationViewDragStateEnding) {
         self.longitude =  view.annotation.coordinate.longitude;
         self.latitude = view.annotation.coordinate.latitude;
+        
+        //7.17自动搜索附近设备//////////////////////////////////////////////
+        //[self searchNearby];
     }
 }
 #pragma mark - 联系TagDetailVC
@@ -453,6 +511,34 @@
     });
 
     
+
+}
+
+#pragma mark UISearchBarDelegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+    NSLog(@"searchbar text = %@", searchBar.text);
+   
+    //7.17搜索栏定位//////////////////////////////////////////////
+    //[self beginGeocode:@"" andAddress:searchBar.text];
+    
+    
+    
+    
+//    [ProgressHUD show:@"正在查询..."];
+//    self.view.userInteractionEnabled = false;
+//    
+//    dispatch_async(serverQueue, ^{
+//        
+//        if (true) {
+//            return ;
+//        }
+//        else//登录出错
+//        {
+//            [self performSelectorOnMainThread:@selector(errorWithMessage:) withObject:@"获取失败！" waitUntilDone:YES];
+//            return ;
+//        }
+//    });
 
 }
 
