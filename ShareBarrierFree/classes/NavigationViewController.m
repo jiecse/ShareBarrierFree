@@ -36,7 +36,10 @@
                                             highlightedImage:nil
                                                       action:^(REMenuItem *item) {
                                                           NSLog(@"Item: %@", item);
-                                                          HomeViewController *controller = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+                                                          if ([weakSelf.visibleViewController isKindOfClass:[HomeViewController class]] ) {
+                                                              return;
+                                                          }
+                                                          HomeViewController *controller = [[HomeViewController alloc] init];//[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
                                                           [weakSelf setViewControllers:@[controller] animated:NO];
                                                       }];
     
@@ -46,6 +49,10 @@
                                             highlightedImage:nil
                                                       action:^(REMenuItem *item) {
                                                           NSLog(@"Item: %@", item);
+                                                          if ([weakSelf.visibleViewController isKindOfClass:[ActivityViewController class]] ) {
+                                                              return;
+                                                          }
+                                                          
                                                           ActivityViewController *controller = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
                                                           [weakSelf setViewControllers:@[controller] animated:NO];
                                                       }];
@@ -56,6 +63,11 @@
                                                highlightedImage:nil
                                                          action:^(REMenuItem *item) {
                                                              NSLog(@"Item: %@", item);
+                                                             
+                                                             if ([weakSelf.visibleViewController isKindOfClass:[ProfileViewController class]] ) {
+                                                                 return;
+                                                             }
+                                                             
                                                              ProfileViewController *controller = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil];
                                                              [weakSelf setViewControllers:@[controller] animated:NO];
                                                          }];

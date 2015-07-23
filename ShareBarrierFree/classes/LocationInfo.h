@@ -14,12 +14,16 @@
 @property(strong,nonatomic) NSString * time;
 @property(assign,nonatomic) double longtitude;
 @property(assign,nonatomic) double latitude;
-@property(strong,nonatomic) NSString * longtitudeIndex;
-@property(strong,nonatomic) NSString * latitudeIndex;
+//@property(strong,nonatomic) NSString * longtitudeIndex;
+//@property(strong,nonatomic) NSString * latitudeIndex;
 @property(strong,nonatomic) NSString * username;
 @property(strong,nonatomic) NSString * detailDescription;
 @property(strong,nonatomic) NSString * pictureUrl;
 @property(strong,nonatomic) NSData * picture;
+
+@property(assign,nonatomic) int  commentNumber;
+@property(assign,nonatomic) float highPraiseRate;
+
 
 @property(nonatomic) int userId;
 

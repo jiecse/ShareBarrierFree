@@ -17,6 +17,7 @@
     __weak IBOutlet UIImageView *currentImageView;
     __weak IBOutlet UIBarButtonItem *usefulBarBtn;
     __weak IBOutlet UIBarButtonItem *uselessBarBtn;
+    __weak IBOutlet UILabel *countAndRate;
     
 }
 

@@ -42,4 +42,8 @@ NSString *ipAddr;
 //2.4 下载tag的图片
 + (NSData *)DownloadPicture:(NSString *)pictureUrl;
 
+//2.5评论接口
++(NSDictionary *)AddComment:(NSDictionary *)dic;
+//2.6获取好评率和评论数
++(NSDictionary *)GetHighPraiseRate:(int)infoId;
 @end

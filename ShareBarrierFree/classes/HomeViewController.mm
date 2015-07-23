@@ -48,9 +48,9 @@
     //
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self.navigationController action:@selector(toggleMenu)];
     
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchNearby)];
+    //UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchNearby)];
     UIBarButtonItem *tagButtonItem=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTag)];
-    NSArray *itemArray=[[NSArray alloc]initWithObjects:searchButtonItem,tagButtonItem, nil];
+    NSArray *itemArray=[[NSArray alloc]initWithObjects:tagButtonItem, nil];
     [self.navigationItem setRightBarButtonItems:itemArray];
     
     _isGetLatLong =false;
@@ -67,9 +67,12 @@
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = self;
-    NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
-    [_mapView removeAnnotations:array];
-    [self startFollowing];
+    if (_isGetLatLong == false) {
+        NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+        [_mapView removeAnnotations:array];
+        [self startFollowing];
+    }
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -78,7 +81,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
-//    _mapView.delegate = nil; // 不用时，置nil
+    _mapView.delegate = nil; // 不用时，置nil
 //    _locService.delegate = nil;
 }
 
@@ -311,8 +314,8 @@
         _mapView.centerCoordinate = (CLLocationCoordinate2D){_latitude, _longitude};
         [annotationView setSelected:YES animated:YES];
         
-        //7.17自动搜索附近设备//////////////////////////////////////////////
-        //[self searchNearby];
+        //7.17  自动搜索附近设备//////////////////////////////////////////////
+        [self searchNearby];
     }
     return annotationView;
 }
@@ -483,8 +486,8 @@
         self.longitude =  view.annotation.coordinate.longitude;
         self.latitude = view.annotation.coordinate.latitude;
         
-        //7.17自动搜索附近设备//////////////////////////////////////////////
-        //[self searchNearby];
+        //7.17  自动搜索附近设备//////////////////////////////////////////////
+        [self searchNearby];
     }
 }
 #pragma mark - 联系TagDetailVC
@@ -519,8 +522,8 @@
     [searchBar resignFirstResponder];
     NSLog(@"searchbar text = %@", searchBar.text);
    
-    //7.17搜索栏定位//////////////////////////////////////////////
-    //[self beginGeocode:@"" andAddress:searchBar.text];
+    //7.17  搜索栏定位//////////////////////////////////////////////
+    [self beginGeocode:@"" andAddress:searchBar.text];
     
     
     

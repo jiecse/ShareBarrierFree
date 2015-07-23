@@ -272,18 +272,18 @@
     
     double longtitude = pointAnnotation.coordinate.longitude;
     double latitude = pointAnnotation.coordinate.latitude;
-    if (longtitude > 0) {
-        [dic setObject:@"E" forKey:@"longitude_index"];
-    }else{
-        [dic setObject:@"W" forKey:@"longitude_index"];
-    }
-    if (latitude > 0) {
-        [dic setObject:@"N" forKey:@"latitude_index"];
-    }else{
-        [dic setObject:@"S" forKey:@"latitude_index"];
-    }
-    [dic setObject:[NSNumber numberWithDouble:fabs(longtitude)] forKey:@"longitude"];
-    [dic setObject:[NSNumber numberWithDouble:fabs(latitude)] forKey:@"latitude"];
+//    if (longtitude > 0) {
+//        [dic setObject:@"E" forKey:@"longitude_index"];
+//    }else{
+//        [dic setObject:@"W" forKey:@"longitude_index"];
+//    }
+//    if (latitude > 0) {
+//        [dic setObject:@"N" forKey:@"latitude_index"];
+//    }else{
+//        [dic setObject:@"S" forKey:@"latitude_index"];
+//    }
+    [dic setObject:[NSNumber numberWithDouble:longtitude] forKey:@"longitude"];
+    [dic setObject:[NSNumber numberWithDouble:latitude] forKey:@"latitude"];
     
     [dic setObject:[self compressPicture] forKey:@"picture"];
     

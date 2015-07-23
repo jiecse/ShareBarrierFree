@@ -254,4 +254,43 @@ NSString *ipAddr;
 //    UIImage *decodedImage = [UIImage imageWithData:decodedImageData];
     return nil;
 }
+
+//2.5评论接口
++(NSDictionary *)AddComment:(NSDictionary *)dic{
+    NSError *error = nil;
+    NSData *requestData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:requestData encoding:NSUTF8StringEncoding];
+    NSString *urlString = [NSString stringWithFormat:@"http://%@/barrierFree/comment/comment_add.action?requestStr=%@",ipAddr,jsonString];
+    NSLog(@"%@",urlString);
+    
+    NSURL *url=[NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&error];
+    
+    if (data)
+    {
+        return [[ShareBarrierFreeAPIS toDictionary:data] objectForKey:@"jsonMap"];
+    }
+    //NSLog(@"result: %@",[SmartHomeAPIs toDictionary:data]);
+    
+    return [[NSDictionary alloc]initWithObjectsAndKeys:@"fail",@"result",nil];
+}
+
+//2.6获取好评率和评论数
++(NSDictionary *)GetHighPraiseRate:(int)infoId{
+    NSError *error = nil;
+    //NSLog(@"jsonString: %@",str);
+    NSString *urlString = [NSString stringWithFormat:@"http://%@/barrierFree/comment/comment_return_rate.action?info_id=%d",ipAddr,infoId];
+    NSLog(@"%@",urlString);
+    
+    NSURL *url=[NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&error];
+    
+    if (data)
+    {
+        return [[ShareBarrierFreeAPIS toDictionary:data] objectForKey:@"jsonMap"];
+    }
+    //NSLog(@"result: %@",[SmartHomeAPIs toDictionary:data]);
+    
+    return [[NSDictionary alloc]initWithObjectsAndKeys:@"fail",@"result",nil];
+}
 @end

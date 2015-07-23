@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TagDetailViewController">
             <connections>
+                <outlet property="countAndRate" destination="Fac-YJ-fio" id="eB9-Yg-S8i"/>
                 <outlet property="currentImageView" destination="0eR-vf-3F6" id="q2m-46-slU"/>
                 <outlet property="detailDescription" destination="ZaE-Dp-bpo" id="I0n-Jr-Bkw"/>
                 <outlet property="timeInfo" destination="vBE-ly-E4l" id="DNL-bR-LAW"/>
@@ -22,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="7RR-tz-wlu">
-                    <rect key="frame" x="0.0" y="8" width="320" height="187"/>
+                    <rect key="frame" x="0.0" y="8" width="320" height="206"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vBE-ly-E4l">
@@ -50,20 +51,23 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" editable="NO" text="描述" selectable="NO" id="ZaE-Dp-bpo">
-                            <rect key="frame" x="0.0" y="95" width="320" height="86"/>
+                            <rect key="frame" x="0.0" y="126" width="320" height="80"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="0.8972969890510949" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fac-YJ-fio">
+                            <rect key="frame" x="0.0" y="97" width="320" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.89704037410000004" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Loading" id="0eR-vf-3F6">
-                    <rect key="frame" x="41" y="196" width="239" height="309"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                </imageView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="HK7-Cu-sWr">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -90,6 +94,11 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Loading" id="0eR-vf-3F6">
+                    <rect key="frame" x="41" y="215" width="239" height="302"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.8981808850364964" alpha="1" colorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="-139" y="252"/>

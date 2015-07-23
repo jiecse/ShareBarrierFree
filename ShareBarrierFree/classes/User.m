@@ -26,18 +26,18 @@
         [ProgressHUD showError:@"再次输入密码不能为空！"];
         return FALSE;
     }
-    if ([_address isEqualToString:@""]) {
-        [ProgressHUD showError:@"地址不能为空！"];
-        return FALSE;
-    }
-    if ([_email isEqualToString:@""]) {
-        [ProgressHUD showError:@"邮箱不能为空！"];
-        return FALSE;
-    }
-    if ([_phone isEqualToString:@""]) {
-        [ProgressHUD showError:@"手机号不能为空！"];
-        return FALSE;
-    }
+//    if ([_address isEqualToString:@""]) {
+//        [ProgressHUD showError:@"地址不能为空！"];
+//        return FALSE;
+//    }
+//    if ([_email isEqualToString:@""]) {
+//        [ProgressHUD showError:@"邮箱不能为空！"];
+//        return FALSE;
+//    }
+//    if ([_phone isEqualToString:@""]) {
+//        [ProgressHUD showError:@"手机号不能为空！"];
+//        return FALSE;
+//    }
     if(![_password isEqualToString:verifyPassword]){
         [ProgressHUD showError:@"两次输入密码不一致，请重新输入！"];
         return FALSE;

@@ -53,8 +53,6 @@
         self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
         [self.view addSubview:self.loginViewController.view];
     }
-    NSLog(@"%@%@",userName,password);
-
 }
 
 - (void)switchToMainTabBarView
